@@ -1,6 +1,9 @@
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -29,7 +32,7 @@ public class GhostSpeak {
             while (line != null) {
                 DefaultMutableTreeNode serverName = new DefaultMutableTreeNode(line);
                 line = reader.readLine();
-                while(line.startsWith("-")){
+                while(line.startsWith("#")){
                     DefaultMutableTreeNode channelName = new DefaultMutableTreeNode(line);
                     serverName.add(channelName);
                     line = reader.readLine();
@@ -46,6 +49,13 @@ public class GhostSpeak {
         }
         DefaultTreeModel tree1Model = new DefaultTreeModel(top, true);
         tree1.setModel(tree1Model);
+        tree1.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                TreePath test = e.getPath();
+                System.out.println(test);
+            }
+        });
     }
     public JPanel getContent(){
         return content;
