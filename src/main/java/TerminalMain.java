@@ -14,6 +14,6 @@ public class TerminalMain extends ListenerAdapter {
     public static void main(String[] args) throws LoginException {
         String token = "NTY5ODU5NTM1OTIyMjY2MTQy.XMCB-Q.HSSRhFKhipBPsCa0wjYyeuUoccc";
         JDA builder = new JDABuilder(token).build();
-        builder.addEventListener(new MyListener());
+        builder.addEventListener(new ArcCore());
     }
 }

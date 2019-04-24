@@ -38,16 +38,13 @@ public class ArcPanel extends ListenerAdapter {
             }
         });
     }
-    public void addLog(String message){
+
+    public void addLog(String message) {
         logModel.addElement(message);
-        System.out.println(logModel);
         logList.updateUI();
     }
-    public JPanel getContent(){
+
+    public JPanel getContent() {
         return content;
-    }
-    @Override
-    public void onMessageReceived(@NotNull MessageReceivedEvent event){
-        System.out.println("Message: "+event.getAuthor().getName()+": "+event.getMessage().getContentDisplay());
     }
 }
