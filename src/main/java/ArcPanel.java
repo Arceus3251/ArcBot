@@ -7,17 +7,15 @@ import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 public class ArcPanel extends ListenerAdapter {
     private JPanel content;
     private JButton devPanelButton;
-    private JList logList;
+    private JList<String> logList;
     private static DefaultListModel<String> logModel = new DefaultListModel<>();
     public ArcPanel() throws LoginException {
         logList.setModel(logModel);
-        JDABuilder builder = new JDABuilder(AccountType.BOT);
-        String token = "NTY5ODU5NTM1OTIyMjY2MTQy.XMBjkQ.siMoyWmcxtXntaH-KrNJ5qD_NaI";
-        builder.setToken(token);
         devPanelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,16 +37,17 @@ public class ArcPanel extends ListenerAdapter {
                 devFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             }
         });
-        builder.build();
     }
-    @Override
-    public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
-        super.onMessageReceived(event);
-        logModel.addElement(event.getMessage().getContentRaw());
-        logList.setModel(logModel);
+    public void addLog(String message){
+        logModel.addElement(message);
+        System.out.println(logModel);
         logList.updateUI();
     }
     public JPanel getContent(){
         return content;
+    }
+    @Override
+    public void onMessageReceived(@NotNull MessageReceivedEvent event){
+        System.out.println("Message: "+event.getAuthor().getName()+": "+event.getMessage().getContentDisplay());
     }
 }
