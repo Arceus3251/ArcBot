@@ -4,6 +4,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -54,6 +56,15 @@ public class GhostSpeak {
             public void valueChanged(TreeSelectionEvent e) {
                 TreePath test = e.getPath();
                 System.out.println(test);
+            }
+        });
+        enterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String output = textArea1.getText();
+                System.out.println(output);
+                textArea1.setText("");
+                textArea1.updateUI();
             }
         });
     }
