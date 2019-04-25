@@ -12,13 +12,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class GhostSpeak {
-    public static void main(String[] args){
-        JFrame frame = new JFrame();
-        frame.setSize(300, 300);
-        frame.setContentPane(new GhostSpeak().getContent());
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    }
     private JPanel content;
     private JButton enterButton;
     private JTextArea textArea1;

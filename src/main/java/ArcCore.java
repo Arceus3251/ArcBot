@@ -1,4 +1,5 @@
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -30,11 +31,11 @@ public class ArcCore extends ListenerAdapter {
                     event.getChannel().sendMessage("Pong!").queue();
                 }
             }
-            if(received.equals("Time")){
-                event.getChannel().sendMessage("According to my sources, it is currently " +sdf.format(cal.getTime())+ " CST").queue();
+            if (received.equals("Time")) {
+                event.getChannel().sendMessage("According to my sources, it is currently " + sdf.format(cal.getTime()) + " CST").queue();
             }
             if (received.equals("Test")) {
-                event.getChannel().sendMessage("Test successful! Hey, " +event.getAuthor().getName()+ "!").queue();
+                event.getChannel().sendMessage("Test successful! Hey, " + event.getAuthor().getName() + "!").queue();
             }
             if (received.equals("Shutdown")) {
                 if (event.getAuthor().getId().equals("239598274103738369")) {
@@ -57,12 +58,12 @@ public class ArcCore extends ListenerAdapter {
                     }
                 }
             }
-            if (received.equals("Summon")){
-                received = received.replace("Summon","");
+            if (received.equals("Summon")) {
+                received = received.replace("Summon", "");
                 VoiceChannel myChannel = event.getMember().getVoiceState().getChannel();
                 audioManager.openAudioConnection(myChannel);
             }
-            if (received.equals("Leave")){
+            if (received.equals("Leave")) {
                 audioManager.closeAudioConnection();
                 event.getChannel().sendMessage("I have left your voice channel").queue();
             }
@@ -159,16 +160,16 @@ public class ArcCore extends ListenerAdapter {
             if (received.startsWith("Roll")) {
                 boolean building = false;
                 String input = received.replace("Roll ", "");
-                if(input.startsWith("building")){
-                    input = input.replace("building ","");
+                if (input.startsWith("building")) {
+                    input = input.replace("building ", "");
                     building = true;
                 }
                 StringBuilder TotalOutput = new StringBuilder();
                 int total = 0;
                 String output = new String();
-                if(input.contains(" + ")){
+                if (input.contains(" + ")) {
                     String inArr[] = input.split("\\+");
-                    for(String a:inArr){
+                    for (String a : inArr) {
                         a = a.replace(" ", "");
                         String[] numbers = a.split("d");
                         int dice = Integer.parseInt(numbers[0]);
@@ -178,22 +179,21 @@ public class ArcCore extends ListenerAdapter {
                         int i;
                         arr = new int[dice];
                         output = "(";
-                        while(dice>0){
+                        while (dice > 0) {
                             dice--;
-                            i = (int)(Math.random()*sides)+1;
+                            i = (int) (Math.random() * sides) + 1;
                             total += i;
                             arr[x] = i;
                             x++;
                         }
-                        for (int b = 0; b< arr.length-1; b++){
+                        for (int b = 0; b < arr.length - 1; b++) {
                             output += (arr[b] + ", ");
                         }
-                        output += (arr[arr.length-1]);
+                        output += (arr[arr.length - 1]);
                         output += ")";
-                        TotalOutput.append(output+ " + ");
+                        TotalOutput.append(output + " + ");
                     }
-                }
-                else{
+                } else {
                     String[] numbers = input.split("d");
                     int dice = Integer.parseInt(numbers[0]);
                     int sides = Integer.parseInt(numbers[1]);
@@ -202,28 +202,28 @@ public class ArcCore extends ListenerAdapter {
                     int i;
                     arr = new int[dice];
                     output = "(";
-                    while(dice>0){
+                    while (dice > 0) {
                         dice--;
-                        i = (int)(Math.random()*sides)+1;
+                        i = (int) (Math.random() * sides) + 1;
                         total += i;
                         arr[x] = i;
                         x++;
                     }
-                    for (int b = 0; b< arr.length-1; b++){
+                    for (int b = 0; b < arr.length - 1; b++) {
                         output += (arr[b] + ", ");
                     }
-                    output += (arr[arr.length-1]);
+                    output += (arr[arr.length - 1]);
                     output += ")";
                     TotalOutput.append(output);
-                    if(building){
-                        TotalOutput = TotalOutput.replace(0,1,"");
-                        TotalOutput = TotalOutput.replace(TotalOutput.length()-1, TotalOutput.length(), "");
-                        for(String c: TotalOutput.toString().split(", ")){
-                            if(Integer.parseInt(c)==sides){
+                    if (building) {
+                        TotalOutput = TotalOutput.replace(0, 1, "");
+                        TotalOutput = TotalOutput.replace(TotalOutput.length() - 1, TotalOutput.length(), "");
+                        for (String c : TotalOutput.toString().split(", ")) {
+                            if (Integer.parseInt(c) == sides) {
                                 boolean max = true;
-                                while(max){
-                                    i = (int)(Math.random()*sides)+1;
-                                    if(i!=sides){
+                                while (max) {
+                                    i = (int) (Math.random() * sides) + 1;
+                                    if (i != sides) {
                                         max = !max;
                                     }
                                     total += i;
@@ -232,8 +232,8 @@ public class ArcCore extends ListenerAdapter {
                         }
                     }
                 }
-                if(TotalOutput.lastIndexOf(" + ") == TotalOutput.length()-3){
-                    TotalOutput.replace((TotalOutput.length()-3),(TotalOutput.length()), "");
+                if (TotalOutput.lastIndexOf(" + ") == TotalOutput.length() - 3) {
+                    TotalOutput.replace((TotalOutput.length() - 3), (TotalOutput.length()), "");
                 }
                 event.getChannel().sendMessage(TotalOutput + " Total: " + total).queue();
             }
@@ -308,17 +308,17 @@ public class ArcCore extends ListenerAdapter {
             }
 
         }
-        if (event.getGuild().getName().equals("Dungeons and Dickholes")){
-            if(event.getMessage().getContentRaw().contains("= (1)")){
+        if (event.getGuild().getName().equals("Dungeons and Dickholes")) {
+            if (event.getMessage().getContentRaw().contains("= (1)")) {
                 event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
             }
-            if(event.getMessage().getContentRaw().contains("= (20)")){
+            if (event.getMessage().getContentRaw().contains("= (20)")) {
                 event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527532487329710111/completely-erect-jenkins-im-back-from-my-long-sabbatical-and-3956744-picsay.png").queue();
             }
-            if(event.getMessage().getContentRaw().contains("= (2)")){
+            if (event.getMessage().getContentRaw().contains("= (2)")) {
                 event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527212607073943553/2.jpg").queue();
             }
-            if(event.getMessage().getContentRaw().contains("= (19)")){
+            if (event.getMessage().getContentRaw().contains("= (19)")) {
                 event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527567698415190027/i-have-the-weirdest-boner.jpg").queue();
             }
         }
@@ -375,22 +375,22 @@ public class ArcCore extends ListenerAdapter {
     }
 
     //Changes Decimal to Text
-    private static String DecText(String received, int todo){
+    private static String DecText(String received, int todo) {
         String output = "";
         StringBuilder sb = new StringBuilder();
-        while(received.contains(" ")){
+        while (received.contains(" ")) {
             String[] parts = received.split(" ", 2);
             String part1 = parts[0];
             String input3 = parts[1];
             int input2 = Integer.parseInt(part1);
-            char ch=(char)input2;
+            char ch = (char) input2;
             sb.append(ch);
             received = input3;
         }
         int input2 = Integer.parseInt(received);
-        char ch =(char)input2;
+        char ch = (char) input2;
         sb.append(ch);
-        switch(todo){
+        switch (todo) {
             case 0:
                 output = sb.toString();
                 break;
@@ -405,31 +405,34 @@ public class ArcCore extends ListenerAdapter {
         }
         return output;
     }
+
     //Changes Text to Binary
-    private static String TextBin(String received){
+    private static String TextBin(String received) {
         byte[] bytes = received.getBytes();
         StringBuilder binary = new StringBuilder();
-        for (byte b : bytes){
+        for (byte b : bytes) {
             int val = b;
-            for (int i = 0; i<8;i++){
-                binary.append((val&128)==0?0:1);
-                val<<=1;
+            for (int i = 0; i < 8; i++) {
+                binary.append((val & 128) == 0 ? 0 : 1);
+                val <<= 1;
             }
             binary.append(' ');
         }
         return binary.toString();
     }
+
     //Changes Text to Hexadecimal
-    private static String TextHex(String received){
-        int length = received.length()*2;
-        return String.format("%"+length+"x", new BigInteger(1,received.getBytes()));
+    private static String TextHex(String received) {
+        int length = received.length() * 2;
+        return String.format("%" + length + "x", new BigInteger(1, received.getBytes()));
     }
+
     //Changes Text to Decimal
-    private static String TextDec(String received){
+    private static String TextDec(String received) {
         StringBuilder decimal = new StringBuilder();
         int length = received.length();
         int i = 0;
-        while (length>0){
+        while (length > 0) {
             length--;
             decimal.append((int) received.charAt(i));
             decimal.append(' ');
@@ -437,6 +440,7 @@ public class ArcCore extends ListenerAdapter {
         }
         return decimal.toString();
     }
+
     //Changes Text to Morse
     private static String TextMorse(String received) {
         String outputMorse;
@@ -590,7 +594,7 @@ public class ArcCore extends ListenerAdapter {
             }
         }
         outputMorse = sb.toString();
-        return(outputMorse);
+        return (outputMorse);
     }
 }
 
