@@ -76,6 +76,9 @@ public class ArcCore extends ListenerAdapter {
                     event.getChannel().sendMessage("Tails").queue();
                 }
             }
+            if(received.equals("Link")){
+                event.getChannel().sendMessage("https://discordapp.com/channels/"+(event.getGuild().getId())+"/"+event.getMember().getVoiceState().getChannel().getId()).queue();
+            }
             //Conversion Clusterfuck
             //To-Do Key: Text = 0; Binary = 1; Hex = 2; Decimal = 3;
             if (received.startsWith("Convert ")) {

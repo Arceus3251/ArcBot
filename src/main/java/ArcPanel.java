@@ -41,7 +41,6 @@ public class ArcPanel extends ListenerAdapter {
 
     public void addLog(String message) {
         logModel.addElement(message);
-        logList.updateUI();
     }
 
     public JPanel getContent() {
