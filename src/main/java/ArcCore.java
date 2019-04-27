@@ -1,19 +1,17 @@
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ArcCore extends ListenerAdapter {
-    public String message = "Test";
-
     @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         AudioManager audioManager = event.getGuild().getAudioManager();
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -169,7 +167,7 @@ public class ArcCore extends ListenerAdapter {
                 }
                 StringBuilder TotalOutput = new StringBuilder();
                 int total = 0;
-                String output = new String();
+                StringBuilder output;
                 if (input.contains(" + ")) {
                     String inArr[] = input.split("\\+");
                     for (String a : inArr) {
@@ -181,7 +179,8 @@ public class ArcCore extends ListenerAdapter {
                         int x = 0;
                         int i;
                         arr = new int[dice];
-                        output = "(";
+                        output = new StringBuilder();
+                        output.append("(");
                         while (dice > 0) {
                             dice--;
                             i = (int) (Math.random() * sides) + 1;
@@ -190,11 +189,14 @@ public class ArcCore extends ListenerAdapter {
                             x++;
                         }
                         for (int b = 0; b < arr.length - 1; b++) {
-                            output += (arr[b] + ", ");
+                            output.append(arr[b]);
+                            output.append(", ");
                         }
-                        output += (arr[arr.length - 1]);
-                        output += ")";
-                        TotalOutput.append(output + " + ");
+                        String output2 = output.toString();
+                        output2 += (arr[arr.length - 1]);
+                        output2 += ")";
+                        TotalOutput.append(output2);
+                        TotalOutput.append(" + ");
                     }
                 } else {
                     String[] numbers = input.split("d");
@@ -204,7 +206,8 @@ public class ArcCore extends ListenerAdapter {
                     int x = 0;
                     int i;
                     arr = new int[dice];
-                    output = "(";
+                    output = new StringBuilder();
+                    output.append("(");
                     while (dice > 0) {
                         dice--;
                         i = (int) (Math.random() * sides) + 1;
@@ -213,10 +216,11 @@ public class ArcCore extends ListenerAdapter {
                         x++;
                     }
                     for (int b = 0; b < arr.length - 1; b++) {
-                        output += (arr[b] + ", ");
+                        output.append(arr[b]);
+                        output.append(", ");
                     }
-                    output += (arr[arr.length - 1]);
-                    output += ")";
+                    output.append(arr[arr.length - 1]);
+                    output.append(")");
                     TotalOutput.append(output);
                     if (building) {
                         TotalOutput = TotalOutput.replace(0, 1, "");
@@ -227,7 +231,7 @@ public class ArcCore extends ListenerAdapter {
                                 while (max) {
                                     i = (int) (Math.random() * sides) + 1;
                                     if (i != sides) {
-                                        max = !max;
+                                        max = false;
                                     }
                                     total += i;
                                 }
@@ -286,14 +290,6 @@ public class ArcCore extends ListenerAdapter {
         }
         if (event.getMessage().getContentRaw().equals("Send nudes")) {
             event.getChannel().sendMessage("No, send dunes, I wanna see them sexy landforms").queue();
-        }
-        if (event.getGuild().getName().equals("~The Harmonoids~")) {
-            if (event.getMessage().getContentRaw().startsWith("+suggest")) {
-                String input = event.getMessage().getContentRaw();
-                String suggestion = input.replace("+suggest", "");
-                event.getMessage().delete().queue();
-                event.getGuild().getTextChannelById("496215882960338945").sendMessage(event.getAuthor().getName() + " suggests: " + suggestion).queue();
-            }
         }
         //Commands only for DnD Server.
         if (event.getGuild().getName().equals("D&D Plaza")) {
@@ -450,9 +446,8 @@ public class ArcCore extends ListenerAdapter {
         StringBuilder sb = new StringBuilder();
         String input = received.toLowerCase();
         char[] charArray = input.toCharArray();
-        for (int i = 0; i < charArray.length; i++) {
-            char check = charArray[i];
-            switch (check) {
+        for (char a: charArray) {
+            switch (a) {
                 case 'a':
                     sb.append(".- ");
                     break;
