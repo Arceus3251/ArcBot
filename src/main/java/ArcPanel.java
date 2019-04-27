@@ -1,7 +1,5 @@
 import javax.security.auth.login.LoginException;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class ArcPanel extends ListenerAdapter {
@@ -14,15 +12,12 @@ public class ArcPanel extends ListenerAdapter {
         devPanelButton.addActionListener(ActionEvent -> {
             JFrame devFrame = new JFrame("Developer Panel");
             JButton ghostSpeak = new JButton("Ghost Talk");
-            ghostSpeak.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JFrame ghostSpeakFrame = new JFrame("Ghost Speak");
-                    ghostSpeakFrame.setContentPane(new GhostSpeak().getContent());
-                    ghostSpeakFrame.setVisible(true);
-                    ghostSpeakFrame.setSize(300, 300);
-                    ghostSpeakFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                }
+            ghostSpeak.addActionListener(Apple -> {
+                JFrame ghostSpeakFrame = new JFrame("Ghost Speak");
+                ghostSpeakFrame.setContentPane(new GhostSpeak().getContent());
+                ghostSpeakFrame.setVisible(true);
+                ghostSpeakFrame.setSize(300, 300);
+                ghostSpeakFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             });
             devFrame.add(ghostSpeak);
             devFrame.setSize(300, 300);

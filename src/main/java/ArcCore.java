@@ -15,7 +15,7 @@ public class ArcCore extends ListenerAdapter {
         AudioManager audioManager = event.getGuild().getAudioManager();
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        Main.panelArc.addLog(message = (event.getAuthor().getName() + " in " + event.getChannel() + ": " + event.getMessage().getContentDisplay()));
+        Main.panelArc.addLog(event.getAuthor().getName() + " in " + event.getChannel() + ": " + event.getMessage().getContentDisplay());
         if (event.getMessage().getContentRaw().startsWith("Arc")) {
             String received = event.getMessage().getContentRaw();
             received = received.replaceFirst("Arc", "");
@@ -58,8 +58,14 @@ public class ArcCore extends ListenerAdapter {
             }
             if (received.equals("Summon")) {
                 received = received.replace("Summon", "");
-                VoiceChannel myChannel = event.getMember().getVoiceState().getChannel();
-                audioManager.openAudioConnection(myChannel);
+                if(event.getMember().getVoiceState().inVoiceChannel()) {
+                    try {
+                        VoiceChannel mychannel = event.getMember().getVoiceState().getChannel();
+                        audioManager.openAudioConnection(mychannel);
+                    } catch (NullPointerException ex) {
+                        event.getChannel().sendMessage("You're not in a voice channel!").queue();
+                    }
+                }
             }
             if (received.equals("Leave")) {
                 audioManager.closeAudioConnection();
@@ -75,7 +81,12 @@ public class ArcCore extends ListenerAdapter {
                 }
             }
             if(received.equals("Link")){
-                event.getChannel().sendMessage("https://discordapp.com/channels/"+(event.getGuild().getId())+"/"+event.getMember().getVoiceState().getChannel().getId()).queue();
+                try{
+                    event.getChannel().sendMessage("https://discordapp.com/channels/" + (event.getGuild().getId()) + "/" + event.getMember().getVoiceState().getChannel().getId()).queue();
+                }
+                catch(NullPointerException ex){
+                    System.out.println("Not Found");
+                }
             }
             //Conversion Clusterfuck
             //To-Do Key: Text = 0; Binary = 1; Hex = 2; Decimal = 3;
