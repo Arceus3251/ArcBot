@@ -41,6 +41,9 @@ public class ArcPanel extends ListenerAdapter {
 
     public void addLog(String message) {
         logModel.addElement(message);
+        if(logModel.size()>200){
+            logModel.remove(0);
+        }
     }
 
     public JPanel getContent() {
