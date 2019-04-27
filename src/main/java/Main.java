@@ -10,7 +10,7 @@ import javax.swing.*;
 public class Main extends ListenerAdapter {
     static ArcPanel panelArc;
     public static void main(String[] args)throws LoginException {
-        String token = "NTY5ODU5NTM1OTIyMjY2MTQy.XMBjkQ.siMoyWmcxtXntaH-KrNJ5qD_NaI";
+        String token = "NDg3Njk2MDMxNDE3NDk5NjQ5.XMS8ZA.qCaDkk6l8EWkx4frYG2W8MCjkDA";
         JDA builder = new JDABuilder(token).build();
         JFrame frame = new JFrame("ArcBot");
         panelArc = new ArcPanel();
