@@ -7,7 +7,7 @@ public class ArcPanel extends ListenerAdapter {
     private JButton devPanelButton;
     private JList<String> logList;
     private static DefaultListModel<String> logModel = new DefaultListModel<>();
-    public ArcPanel() throws LoginException {
+    public ArcPanel(){
         logList.setModel(logModel);
         devPanelButton.addActionListener(ActionEvent -> {
             JFrame devFrame = new JFrame("Developer Panel");
