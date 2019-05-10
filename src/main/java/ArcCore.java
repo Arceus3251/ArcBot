@@ -15,175 +15,204 @@ public class ArcCore extends ListenerAdapter {
         AudioManager audioManager = event.getGuild().getAudioManager();
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        Main.panelArc.addLog(event.getAuthor().getName() + " in " + event.getChannel() + ": " + event.getMessage().getContentDisplay());
-        if (event.getMessage().getContentRaw().startsWith("Arc")) {
-            String received = event.getMessage().getContentRaw();
-            received = received.replaceFirst("Arc", "");
-            if (received.equals("Help")) {
-                event.getChannel().sendMessage("Hi! I'm ArcBot! A discord bot written in Java by Arceus3251. This command is currently under development, so please check back at a later time for when it will be available. If you have any questions or suggestions please DM Arceus3251#3251.").queue();
-            }
-            if (received.equals("Ping")) {
-                if (event.getAuthor().getId().equals("239598274103738369")) {
-                    event.getChannel().sendMessage("I work, you dumbfuck").queue();
-                } else {
-                    event.getChannel().sendMessage("Pong!").queue();
+        if (event.getMessage().getAuthor().getName().equals("DuckHunt")) {
+            return;
+        } else {
+            Main.panelArc.addLog(event.getAuthor().getName() + " in " + event.getChannel() + ": " + event.getMessage().getContentDisplay());
+            if (event.getMessage().getContentRaw().startsWith("Arc")) {
+                String received = event.getMessage().getContentRaw();
+                received = received.replaceFirst("Arc", "");
+                if (received.equals("Help")) {
+                    event.getChannel().sendMessage("Hi! I'm ArcBot! A discord bot written in Java by Arceus3251. This command is currently under development, so please check back at a later time for when it will be available. If you have any questions or suggestions please DM Arceus3251#3251.").queue();
                 }
-            }
-            if (received.equals("Time")) {
-                event.getChannel().sendMessage("According to my sources, it is currently " + sdf.format(cal.getTime()) + " CST").queue();
-            }
-            if (received.equals("Test")) {
-                event.getChannel().sendMessage("Test successful! Hey, " + event.getAuthor().getName() + "!").queue();
-            }
-            if (received.equals("Shutdown")) {
-                if (event.getAuthor().getId().equals("239598274103738369")) {
-                    event.getChannel().sendMessage("Thank you for using ArcBot!").queue();
-                    System.exit(1);
-                } else {
-                    event.getChannel().sendMessage("Only Arceus3251 can perform that command").queue();
-                }
-            }
-            if (received.startsWith("Sayd")) {
-                if (event.getAuthor().getName().equals("ArcBot")) {
-                    return;
-                } else {
-                    received = received.replaceFirst("Sayd ", "");
-                    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-                        event.getChannel().sendMessage("Sorry! I don't have the permissions to perform that command! Contact @Arceus3251#3251 for more information!").queue();
+                if (received.equals("Ping")) {
+                    if (event.getAuthor().getId().equals("239598274103738369")) {
+                        event.getChannel().sendMessage("I work, you dumbfuck").queue();
                     } else {
-                        event.getMessage().delete().queue();
-                        event.getChannel().sendMessage(received).queue();
+                        event.getChannel().sendMessage("Pong!").queue();
                     }
                 }
-            }
-            if (received.equals("Summon")) {
-                received = received.replace("Summon", "");
-                if(event.getMember().getVoiceState().inVoiceChannel()) {
+                if (received.equals("Time")) {
+                    event.getChannel().sendMessage("According to my sources, it is currently " + sdf.format(cal.getTime()) + " CST").queue();
+                }
+                if (received.equals("Test")) {
+                    event.getChannel().sendMessage("Test successful! Hey, " + event.getAuthor().getName() + "!").queue();
+                }
+                if (received.equals("Shutdown")) {
+                    if (event.getAuthor().getId().equals("239598274103738369")) {
+                        event.getChannel().sendMessage("Thank you for using ArcBot!").queue();
+                        System.exit(1);
+                    } else {
+                        event.getChannel().sendMessage("Only Arceus3251 can perform that command").queue();
+                    }
+                }
+                if (received.startsWith("Sayd")) {
+                    if (event.getAuthor().getName().equals("ArcBot")) {
+                        return;
+                    } else {
+                        received = received.replaceFirst("Sayd ", "");
+                        if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+                            event.getChannel().sendMessage("Sorry! I don't have the permissions to perform that command! Contact @Arceus3251#3251 for more information!").queue();
+                        } else {
+                            event.getMessage().delete().queue();
+                            event.getChannel().sendMessage(received).queue();
+                        }
+                    }
+                }
+                if (received.equals("Summon")) {
+                    received = received.replace("Summon", "");
+                    if (event.getMember().getVoiceState().inVoiceChannel()) {
+                        try {
+                            VoiceChannel mychannel = event.getMember().getVoiceState().getChannel();
+                            audioManager.openAudioConnection(mychannel);
+                        } catch (NullPointerException ex) {
+                            event.getChannel().sendMessage("You're not in a voice channel!").queue();
+                        }
+                    }
+                }
+                if (received.equals("Leave")) {
+                    audioManager.closeAudioConnection();
+                    event.getChannel().sendMessage("I have left your voice channel").queue();
+                }
+                if (received.equals("Flip")) {
+                    int coin = (int) (Math.random() * 2) + 1;
+                    if (coin == 1) {
+                        event.getChannel().sendMessage("Heads").queue();
+                    }
+                    if (coin == 2) {
+                        event.getChannel().sendMessage("Tails").queue();
+                    }
+                }
+                if (received.equals("Link")) {
                     try {
-                        VoiceChannel mychannel = event.getMember().getVoiceState().getChannel();
-                        audioManager.openAudioConnection(mychannel);
+                        event.getChannel().sendMessage("https://discordapp.com/channels/" + (event.getGuild().getId()) + "/" + event.getMember().getVoiceState().getChannel().getId()).queue();
                     } catch (NullPointerException ex) {
-                        event.getChannel().sendMessage("You're not in a voice channel!").queue();
+                        System.out.println("Not Found");
                     }
                 }
-            }
-            if (received.equals("Leave")) {
-                audioManager.closeAudioConnection();
-                event.getChannel().sendMessage("I have left your voice channel").queue();
-            }
-            if (received.equals("Flip")) {
-                int coin = (int) (Math.random() * 2) + 1;
-                if (coin == 1) {
-                    event.getChannel().sendMessage("Heads").queue();
-                }
-                if (coin == 2) {
-                    event.getChannel().sendMessage("Tails").queue();
-                }
-            }
-            if(received.equals("Link")){
-                try{
-                    event.getChannel().sendMessage("https://discordapp.com/channels/" + (event.getGuild().getId()) + "/" + event.getMember().getVoiceState().getChannel().getId()).queue();
-                }
-                catch(NullPointerException ex){
-                    System.out.println("Not Found");
-                }
-            }
-            //Conversion Clusterfuck
-            //To-Do Key: Text = 0; Binary = 1; Hex = 2; Decimal = 3;
-            if (received.startsWith("Convert ")) {
-                String output = "";
-                int todo = -1;
-                received = received.replaceFirst("Convert ", "");
+                //Conversion Clusterfuck
+                //To-Do Key: Text = 0; Binary = 1; Hex = 2; Decimal = 3;
+                if (received.startsWith("Convert ")) {
+                    String output = "";
+                    int todo = -1;
+                    received = received.replaceFirst("Convert ", "");
 
-                //Input is Binary
-                if (received.startsWith("Binary ")) {
-                    received = received.replaceFirst("Binary ", "");
-                    if (received.startsWith("Text ")) {
-                        todo = 0;
-                        received = received.replaceFirst("Text ", "");
-                    }
-                    if (received.startsWith("Hex ")) {
-                        todo = 2;
-                        received = received.replaceFirst("Hex ", "");
-                    }
-                    if (received.startsWith("Decimal ")) {
-                        todo = 3;
-                        received = received.replaceFirst("Decimal ", "");
-                    }
-                    output = BinText(received, todo);
-                }
-                //Input is Raw Text
-                if (received.startsWith("Text ")) {
-                    received = received.replaceFirst("Text ", "");
-                    if (received.startsWith("Binary")) {
-                        received = received.replaceFirst("Binary ", "");
-                        output = TextBin(received);
-                    }
-                    if (received.startsWith("Hex ")) {
-                        received = received.replaceFirst("Hex ", "");
-                        output = TextHex(received);
-                    }
-                    if (received.startsWith("Decimal ")) {
-                        received = received.replaceFirst("Decimal ", "");
-                        output = TextDec(received);
-                    }
-                    if (received.startsWith("Morse ")) {
-                        received = received.replaceFirst("Morse ", "");
-                        output = TextMorse(received);
-                    }
-                }
-                //Input is Hexadecimal
-                if (received.startsWith("Hex ")) {
-                    received = received.replaceFirst("Hex ", "");
-                    if (received.startsWith("Text ")) {
-                        received = received.replaceFirst("Text ", "");
-                        todo = 0;
-                    }
+                    //Input is Binary
                     if (received.startsWith("Binary ")) {
-                        todo = 1;
                         received = received.replaceFirst("Binary ", "");
+                        if (received.startsWith("Text ")) {
+                            todo = 0;
+                            received = received.replaceFirst("Text ", "");
+                        }
+                        if (received.startsWith("Hex ")) {
+                            todo = 2;
+                            received = received.replaceFirst("Hex ", "");
+                        }
+                        if (received.startsWith("Decimal ")) {
+                            todo = 3;
+                            received = received.replaceFirst("Decimal ", "");
+                        }
+                        output = BinText(received, todo);
                     }
-                    if (received.startsWith("Decimal ")) {
-                        todo = 3;
-                        received = received.replaceFirst("Decimal ", "");
-                    }
-                    output = HexText(received, todo);
-                }
-                //Input is Decimal
-                if (received.startsWith("Decimal ")) {
-                    received = received.replaceFirst("Decimal ", "");
+                    //Input is Raw Text
                     if (received.startsWith("Text ")) {
-                        todo = 0;
                         received = received.replaceFirst("Text ", "");
+                        if (received.startsWith("Binary")) {
+                            received = received.replaceFirst("Binary ", "");
+                            output = TextBin(received);
+                        }
+                        if (received.startsWith("Hex ")) {
+                            received = received.replaceFirst("Hex ", "");
+                            output = TextHex(received);
+                        }
+                        if (received.startsWith("Decimal ")) {
+                            received = received.replaceFirst("Decimal ", "");
+                            output = TextDec(received);
+                        }
+                        if (received.startsWith("Morse ")) {
+                            received = received.replaceFirst("Morse ", "");
+                            output = TextMorse(received);
+                        }
                     }
-                    if (received.startsWith("Binary ")) {
-                        todo = 1;
-                        received = received.replaceFirst("Binary ", "");
-                    }
+                    //Input is Hexadecimal
                     if (received.startsWith("Hex ")) {
-                        todo = 2;
                         received = received.replaceFirst("Hex ", "");
+                        if (received.startsWith("Text ")) {
+                            received = received.replaceFirst("Text ", "");
+                            todo = 0;
+                        }
+                        if (received.startsWith("Binary ")) {
+                            todo = 1;
+                            received = received.replaceFirst("Binary ", "");
+                        }
+                        if (received.startsWith("Decimal ")) {
+                            todo = 3;
+                            received = received.replaceFirst("Decimal ", "");
+                        }
+                        output = HexText(received, todo);
                     }
-                    output = DecText(received, todo);
+                    //Input is Decimal
+                    if (received.startsWith("Decimal ")) {
+                        received = received.replaceFirst("Decimal ", "");
+                        if (received.startsWith("Text ")) {
+                            todo = 0;
+                            received = received.replaceFirst("Text ", "");
+                        }
+                        if (received.startsWith("Binary ")) {
+                            todo = 1;
+                            received = received.replaceFirst("Binary ", "");
+                        }
+                        if (received.startsWith("Hex ")) {
+                            todo = 2;
+                            received = received.replaceFirst("Hex ", "");
+                        }
+                        output = DecText(received, todo);
+                    }
+                    event.getChannel().sendMessage(output).queue();
                 }
-                event.getChannel().sendMessage(output).queue();
-            }
-            //DiceRolls
-            if (received.startsWith("Roll")) {
-                boolean building = false;
-                String input = received.replace("Roll ", "");
-                if (input.startsWith("building")) {
-                    input = input.replace("building ", "");
-                    building = true;
-                }
-                StringBuilder TotalOutput = new StringBuilder();
-                int total = 0;
-                StringBuilder output;
-                if (input.contains(" + ")) {
-                    String inArr[] = input.split("\\+");
-                    for (String a : inArr) {
-                        a = a.replace(" ", "");
-                        String[] numbers = a.split("d");
+                //DiceRolls
+                if (received.startsWith("Roll")) {
+                    boolean building = false;
+                    String input = received.replace("Roll ", "");
+                    if (input.startsWith("building")) {
+                        input = input.replace("building ", "");
+                        building = true;
+                    }
+                    StringBuilder TotalOutput = new StringBuilder();
+                    int total = 0;
+                    StringBuilder output;
+                    if (input.contains(" + ")) {
+                        String inArr[] = input.split("\\+");
+                        for (String a : inArr) {
+                            a = a.replace(" ", "");
+                            String[] numbers = a.split("d");
+                            int dice = Integer.parseInt(numbers[0]);
+                            int sides = Integer.parseInt(numbers[1]);
+                            int[] arr;
+                            int x = 0;
+                            int i;
+                            arr = new int[dice];
+                            output = new StringBuilder();
+                            output.append("(");
+                            while (dice > 0) {
+                                dice--;
+                                i = (int) (Math.random() * sides) + 1;
+                                total += i;
+                                arr[x] = i;
+                                x++;
+                            }
+                            for (int b = 0; b < arr.length - 1; b++) {
+                                output.append(arr[b]);
+                                output.append(", ");
+                            }
+                            String output2 = output.toString();
+                            output2 += (arr[arr.length - 1]);
+                            output2 += ")";
+                            TotalOutput.append(output2);
+                            TotalOutput.append(" + ");
+                        }
+                    } else {
+                        String[] numbers = input.split("d");
                         int dice = Integer.parseInt(numbers[0]);
                         int sides = Integer.parseInt(numbers[1]);
                         int[] arr;
@@ -203,133 +232,107 @@ public class ArcCore extends ListenerAdapter {
                             output.append(arr[b]);
                             output.append(", ");
                         }
-                        String output2 = output.toString();
-                        output2 += (arr[arr.length - 1]);
-                        output2 += ")";
-                        TotalOutput.append(output2);
-                        TotalOutput.append(" + ");
-                    }
-                } else {
-                    String[] numbers = input.split("d");
-                    int dice = Integer.parseInt(numbers[0]);
-                    int sides = Integer.parseInt(numbers[1]);
-                    int[] arr;
-                    int x = 0;
-                    int i;
-                    arr = new int[dice];
-                    output = new StringBuilder();
-                    output.append("(");
-                    while (dice > 0) {
-                        dice--;
-                        i = (int) (Math.random() * sides) + 1;
-                        total += i;
-                        arr[x] = i;
-                        x++;
-                    }
-                    for (int b = 0; b < arr.length - 1; b++) {
-                        output.append(arr[b]);
-                        output.append(", ");
-                    }
-                    output.append(arr[arr.length - 1]);
-                    output.append(")");
-                    TotalOutput.append(output);
-                    if (building) {
-                        TotalOutput = TotalOutput.replace(0, 1, "");
-                        TotalOutput = TotalOutput.replace(TotalOutput.length() - 1, TotalOutput.length(), "");
-                        for (String c : TotalOutput.toString().split(", ")) {
-                            if (Integer.parseInt(c) == sides) {
-                                boolean max = true;
-                                while (max) {
-                                    i = (int) (Math.random() * sides) + 1;
-                                    if (i != sides) {
-                                        max = false;
+                        output.append(arr[arr.length - 1]);
+                        output.append(")");
+                        TotalOutput.append(output);
+                        if (building) {
+                            TotalOutput = TotalOutput.replace(0, 1, "");
+                            TotalOutput = TotalOutput.replace(TotalOutput.length() - 1, TotalOutput.length(), "");
+                            for (String c : TotalOutput.toString().split(", ")) {
+                                if (Integer.parseInt(c) == sides) {
+                                    boolean max = true;
+                                    while (max) {
+                                        i = (int) (Math.random() * sides) + 1;
+                                        if (i != sides) {
+                                            max = false;
+                                        }
+                                        total += i;
                                     }
-                                    total += i;
                                 }
                             }
                         }
                     }
+                    if (TotalOutput.lastIndexOf(" + ") == TotalOutput.length() - 3) {
+                        TotalOutput.replace((TotalOutput.length() - 3), (TotalOutput.length()), "");
+                    }
+                    event.getChannel().sendMessage(TotalOutput + " Total: " + total).queue();
                 }
-                if (TotalOutput.lastIndexOf(" + ") == TotalOutput.length() - 3) {
-                    TotalOutput.replace((TotalOutput.length() - 3), (TotalOutput.length()), "");
+            }
+            //Reactions
+            if (event.getMessage().getContentRaw().equalsIgnoreCase("Nani")) {
+                if (event.getAuthor().getId().equals("239598274103738369")) {
+                    event.getChannel().sendMessage("https://i.imgur.com/okVleUj.jpg").queue();
                 }
-                event.getChannel().sendMessage(TotalOutput + " Total: " + total).queue();
+                if (event.getAuthor().getId().equals("365700264843280394")) {
+                    event.getChannel().sendMessage("https://i.imgur.com/okVleUj.jpg").queue();
+                }
+                if (event.getAuthor().getId().equals("312087474073632769")) {
+                    event.getChannel().sendMessage("https://i.imgur.com/okVleUj.jpg").queue();
+                }
+                if (event.getAuthor().getId().equals("433994095778594816")) {
+                    event.getChannel().sendMessage("https://i.imgur.com/okVleUj.jpg").queue();
+                }
             }
-        }
-        //Reactions
-        if (event.getMessage().getContentRaw().equalsIgnoreCase("Nani")) {
-            if (event.getAuthor().getId().equals("239598274103738369")) {
-                event.getChannel().sendMessage("https://i.imgur.com/okVleUj.jpg").queue();
+            if (event.getMessage().getContentRaw().equalsIgnoreCase("inan")) {
+                event.getChannel().sendMessage("It doesn't work like that, " + event.getAuthor().getName()).queue();
             }
-            if (event.getAuthor().getId().equals("365700264843280394")) {
-                event.getChannel().sendMessage("https://i.imgur.com/okVleUj.jpg").queue();
+            if (event.getMessage().getContentRaw().equals("F")) {
+                if (event.getAuthor().isBot()) {
+                    return;
+                } else {
+                    event.getChannel().sendMessage("F").queue();
+                }
             }
-            if (event.getAuthor().getId().equals("312087474073632769")) {
-                event.getChannel().sendMessage("https://i.imgur.com/okVleUj.jpg").queue();
+            if (event.getMessage().getContentRaw().equals("QwQ")) {
+                if (event.getAuthor().getId().equals("476105194539712513")) {
+                    event.getChannel().sendMessage("<:MyaQwQ:514864285545922584>").queue();
+                }
             }
-            if (event.getAuthor().getId().equals("433994095778594816")) {
-                event.getChannel().sendMessage("https://i.imgur.com/okVleUj.jpg").queue();
+            if (event.getMessage().getContentRaw().equals("->slap <@487696031417499649>")) {
+                event.getChannel().sendMessage("Ow ;-;").queue();
             }
-        }
-        if (event.getMessage().getContentRaw().equalsIgnoreCase("inan")) {
-            event.getChannel().sendMessage("It doesn't work like that, " + event.getAuthor().getName()).queue();
-        }
-        if (event.getMessage().getContentRaw().equals("F")) {
-            if (event.getAuthor().isBot()) {
-                return;
-            } else {
-                event.getChannel().sendMessage("F").queue();
+            if (event.getMessage().getContentRaw().equals("Is this the Krusty Krab?")) {
+                if (event.getAuthor().getId().equals("242111856259366913")) {
+                    event.getChannel().sendMessage("***No, this is Momo***").queue();
+                } else {
+                    event.getChannel().sendMessage("No, this is Patrick.").queue();
+                }
             }
-        }
-        if (event.getMessage().getContentRaw().equals("QwQ")) {
-            if (event.getAuthor().getId().equals("476105194539712513")) {
-                event.getChannel().sendMessage("<:MyaQwQ:514864285545922584>").queue();
+            if (event.getMessage().getContentRaw().equals("What's up?")) {
+                event.getChannel().sendMessage("According to Wikipedia.com: Up is a 2009 Pixar film. https://en.wikipedia.org/wiki/Up_(2009_film)").queue();
             }
-        }
-        if (event.getMessage().getContentRaw().equals("->slap <@487696031417499649>")) {
-            event.getChannel().sendMessage("Ow ;-;").queue();
-        }
-        if (event.getMessage().getContentRaw().equals("Is this the Krusty Krab?")) {
-            if (event.getAuthor().getId().equals("242111856259366913")) {
-                event.getChannel().sendMessage("***No, this is Momo***").queue();
-            } else {
-                event.getChannel().sendMessage("No, this is Patrick.").queue();
+            if (event.getMessage().getContentRaw().equals("Send nudes")) {
+                event.getChannel().sendMessage("No, send dunes, I wanna see them sexy landforms").queue();
             }
-        }
-        if (event.getMessage().getContentRaw().equals("What's up?")) {
-            event.getChannel().sendMessage("According to Wikipedia.com: Up is a 2009 Pixar film. https://en.wikipedia.org/wiki/Up_(2009_film)").queue();
-        }
-        if (event.getMessage().getContentRaw().equals("Send nudes")) {
-            event.getChannel().sendMessage("No, send dunes, I wanna see them sexy landforms").queue();
-        }
-        //Commands only for DnD Server.
-        if (event.getGuild().getName().equals("D&D Plaza")) {
-            if (event.getMessage().getContentRaw().equals("1")) {
-                event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
-            }
-            if (event.getMessage().getContentRaw().equals("20")) {
-                event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557407756288031/tumblr_inline_mqrh26jIU11qz4rgp.jpg").queue();
-            }
-            if (event.getMessage().getContentRaw().equals("10")) {
-                event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/488083894088761345/491763358056448007/image0.jpg").queue();
-            }
-            if (event.getMessage().getContentRaw().equalsIgnoreCase("lol")) {
-                event.getChannel().sendMessage("http://img0.liveinternet.ru/images/attach/c/10/111/18/111018368_RRyoSRR__SRRRRRSRRSSRRSRyo_RRyoSRRS.gif").queue();
-            }
+            //Commands only for DnD Server.
+            if (event.getGuild().getName().equals("D&D Plaza")) {
+                if (event.getMessage().getContentRaw().equals("1")) {
+                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
+                }
+                if (event.getMessage().getContentRaw().equals("20")) {
+                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557407756288031/tumblr_inline_mqrh26jIU11qz4rgp.jpg").queue();
+                }
+                if (event.getMessage().getContentRaw().equals("10")) {
+                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/488083894088761345/491763358056448007/image0.jpg").queue();
+                }
+                if (event.getMessage().getContentRaw().equalsIgnoreCase("lol")) {
+                    event.getChannel().sendMessage("http://img0.liveinternet.ru/images/attach/c/10/111/18/111018368_RRyoSRR__SRRRRRSRRSSRRSRyo_RRyoSRRS.gif").queue();
+                }
 
-        }
-        if (event.getGuild().getName().equals("Dungeons and Dickholes")) {
-            if (event.getMessage().getContentRaw().contains("= (1)")) {
-                event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
             }
-            if (event.getMessage().getContentRaw().contains("= (20)")) {
-                event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527532487329710111/completely-erect-jenkins-im-back-from-my-long-sabbatical-and-3956744-picsay.png").queue();
-            }
-            if (event.getMessage().getContentRaw().contains("= (2)")) {
-                event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527212607073943553/2.jpg").queue();
-            }
-            if (event.getMessage().getContentRaw().contains("= (19)")) {
-                event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527567698415190027/i-have-the-weirdest-boner.jpg").queue();
+            if (event.getGuild().getName().equals("Dungeons and Dickholes")) {
+                if (event.getMessage().getContentRaw().contains("= (1)")) {
+                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
+                }
+                if (event.getMessage().getContentRaw().contains("= (20)")) {
+                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527532487329710111/completely-erect-jenkins-im-back-from-my-long-sabbatical-and-3956744-picsay.png").queue();
+                }
+                if (event.getMessage().getContentRaw().contains("= (2)")) {
+                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527212607073943553/2.jpg").queue();
+                }
+                if (event.getMessage().getContentRaw().contains("= (19)")) {
+                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527567698415190027/i-have-the-weirdest-boner.jpg").queue();
+                }
             }
         }
     }
