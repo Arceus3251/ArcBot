@@ -8,10 +8,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class GhostSpeak {
-    private JPanel content;
-    private JButton enterButton;
-    private JTextArea textArea1;
-    private JTree tree1;
+    public JPanel content;
+    public JButton enterButton;
+    public JTextArea textArea1;
+    public JTree tree1;
 
     public GhostSpeak(){
         File serverList = new File("src/main/ServerList");

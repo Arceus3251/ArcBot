@@ -1,4 +1,3 @@
-import javax.security.auth.login.LoginException;
 import javax.swing.*;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
