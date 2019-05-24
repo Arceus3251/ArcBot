@@ -20,6 +20,7 @@ public class ArcCore extends ListenerAdapter {
         } else {
             Main.panelArc.addLog(event.getAuthor().getName() + " in " + event.getChannel() + ": " + event.getMessage().getContentDisplay());
             if (event.getMessage().getContentRaw().startsWith("Arc")) {
+                //All Commands Beginning with Arc
                 String received = event.getMessage().getContentRaw();
                 received = received.replaceFirst("Arc", "");
                 if (received.equals("Help")) {
@@ -332,6 +333,27 @@ public class ArcCore extends ListenerAdapter {
                 }
                 if (event.getMessage().getContentRaw().contains("= (19)")) {
                     event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527567698415190027/i-have-the-weirdest-boner.jpg").queue();
+                }
+            }
+            //Sunflower Academy Commands
+            if(event.getGuild().getId().equals("581287208594571265")){
+                if(!event.getMessage().getAuthor().getId().equals("487696031417499649")) {
+                    //Anyone Commands
+                    if(event.getMessage().getContentRaw().equals("SunflowerHelp")) {
+                        event.getChannel().sendMessage("This Module is current under construction, please contact Arceus3251 for any help or suggestions!").queue();
+                    }
+                    if(event.getMessage().getContentRaw().equals("SunflowerPoints")){
+                        event.getChannel().sendMessage("Points command under construction").queue();
+                    }
+                    //Leader Only Commands
+                    if((event.getMember().getRoles()).toString().contains("R:Leaders(581289763282223104)")){
+                        if(event.getMessage().getContentRaw().startsWith("SunflowerAdd")){
+                            event.getChannel().sendMessage("Add command under construction").queue();
+                        }
+                        if(event.getMessage().getContentRaw().startsWith("SunflowerDelete")){
+                            event.getChannel().sendMessage("Delete command under construction").queue();
+                        }
+                    }
                 }
             }
         }
