@@ -1,13 +1,19 @@
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import org.jetbrains.annotations.NotNull;
+import org.apache.commons.net.ftp.FTPClient;
 
+import java.io.*;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class ArcCore extends ListenerAdapter {
     @Override
@@ -23,6 +29,9 @@ public class ArcCore extends ListenerAdapter {
                 //All Commands Beginning with Arc
                 String received = event.getMessage().getContentRaw();
                 received = received.replaceFirst("Arc", "");
+                if(received.equals("getID")){
+                    event.getChannel().sendMessage(event.getAuthor().getId()).queue();
+                }
                 if (received.equals("Help")) {
                     event.getChannel().sendMessage("Hi! I'm ArcBot! A discord bot written in Java by Arceus3251. This command is currently under development, so please check back at a later time for when it will be available. If you have any questions or suggestions please DM Arceus3251#3251.").queue();
                 }
@@ -342,16 +351,230 @@ public class ArcCore extends ListenerAdapter {
                     if(event.getMessage().getContentRaw().equals("SunflowerHelp")) {
                         event.getChannel().sendMessage("This Module is current under construction, please contact Arceus3251 for any help or suggestions!").queue();
                     }
-                    if(event.getMessage().getContentRaw().equals("SunflowerPoints")){
-                        event.getChannel().sendMessage("Points command under construction").queue();
+                    if(event.getMessage().getContentRaw().startsWith("SunflowerPoints")){
+                        Member target;
+                        String targetID;
+                        List<Member> victims = event.getMessage().getMentionedMembers();
+                        if(victims.size()>=1) {
+                            target = victims.get(0);
+                            targetID = target.getId();
+                        }
+                        else{
+                            targetID = event.getMessage().getAuthor().getId();
+                        }
+                        FTPClient client = new FTPClient();
+                        try{
+                            client.connect("ftp.arceus3251.com");
+                            boolean login = client.login("arceus3251-server", "325100Arc");
+                            if(login){
+                                try{
+                                    OutputStream out = null;
+                                    File file = new File("SunflowerAcademyData.txt");
+                                    try{
+                                        out = new FileOutputStream(file);
+                                    }
+                                    catch(IOException ex){
+                                        event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!").queue();
+                                    }
+                                    client.retrieveFile("SunflowerAcademyData.txt", out);
+                                    BufferedReader reader = new BufferedReader(new FileReader(file));
+                                    String line = reader.readLine();
+                                    boolean found = false;
+                                    while(line!=null){
+                                        if((line.substring(0, line.indexOf("/")).equals(targetID))){
+                                            found = true;
+                                            break;
+                                        }
+                                        else{
+                                            line = reader.readLine();
+                                        }
+                                    }
+                                    if(!found){
+                                        event.getChannel().sendMessage("This user doesn't exist!").queue();
+                                    }
+                                    else{
+                                        event.getChannel().sendMessage("<@"+targetID+"> has "+(line.substring(line.indexOf("/")+1))+" points!").queue();
+                                    }
+                                }
+                                catch(IOException ex){
+                                    event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!").queue();
+                                }
+                                client.logout();
+                            }
+                        }
+                        catch(IOException ex){
+                            event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!");
+                        }
                     }
                     //Leader Only Commands
                     if((event.getMember().getRoles()).toString().contains("R:Leaders(581289763282223104)")){
-                        if(event.getMessage().getContentRaw().startsWith("SunflowerAdd")){
-                            event.getChannel().sendMessage("Add command under construction").queue();
+                        if(event.getMessage().getContentRaw().startsWith("SunflowerAddPoints")){
+                            int pointsToAdd = 1;
+                            List<Member> victims = event.getMessage().getMentionedMembers();
+                            Member target = victims.get(0);
+                            String targetID = target.getId();
+                            String[] temp = event.getMessage().getContentRaw().split(" ");
+                            if(temp.length == 3){
+                                pointsToAdd = Integer.parseInt(temp[2]);
+                            }
+                            FTPClient client = new FTPClient();
+                            try {
+                                client.connect("ftp.arceus3251.com");
+                                boolean login = client.login("arceus3251-server", "325100Arc");
+                                if (login) {
+                                    try {
+                                        OutputStream out = null;
+                                        File file = new File("SunflowerAcademyData.txt");
+                                        try {
+                                            out = new FileOutputStream(file);
+                                        } catch (IOException ex) {
+                                            event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!").queue();
+                                        }
+                                        client.retrieveFile("SunflowerAcademyData.txt", out);
+                                        BufferedReader reader = new BufferedReader(new FileReader(file));
+                                        String line = reader.readLine();
+                                        boolean found = false;
+                                        while (line != null) {
+                                            if ((line.substring(0, line.indexOf("/")).equals(targetID))) {
+                                                found = true;
+                                                break;
+                                            } else {
+                                                line = reader.readLine();
+                                            }
+                                        }
+                                        if (!found) {
+                                            event.getChannel().sendMessage("This user doesn't exist!").queue();
+                                        } else {
+                                            BufferedWriter writer;
+                                            try{
+                                                File tempFile = new File("TempFile.txt");
+                                                writer = new BufferedWriter(new FileWriter(tempFile));
+                                                ArrayList<String> tempString = new ArrayList<>();
+                                                reader = new BufferedReader(new FileReader(file));
+                                                line = reader.readLine();
+                                                while(line != null) {
+                                                    tempString.add(line);
+                                                    line = reader.readLine();
+                                                }
+                                                for(String a: tempString){
+                                                    if(a.startsWith(targetID)){
+                                                        int points = Integer.parseInt(a.substring(a.indexOf("/")+1));
+                                                        points+=pointsToAdd;
+                                                        String newLine = targetID+"/"+points;
+                                                        tempString.set(tempString.indexOf(a), newLine);
+                                                    }
+                                                }
+                                                for(String a: tempString){
+                                                    writer.write(a);
+                                                    writer.newLine();
+                                                    writer.close();
+                                                }
+                                                File oldVersion = new File("SunflowerAcademyData.txt");
+                                                oldVersion.delete();
+                                                tempFile.renameTo(new File("SunflowerAcademyData.txt"));
+                                                if(login) {
+                                                    InputStream input = new FileInputStream(tempFile);
+                                                    client.storeFile("SunflowerAcademyData.txt", input);
+                                                    client.logout();
+                                                }
+                                            }
+                                            catch(IOException ex){
+                                                event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!");
+                                            }
+                                        }
+                                    } catch (IOException ex) {
+                                        event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!").queue();
+                                    }
+                                    client.logout();
+                                }
+                            }
+                            catch(IOException ex){
+                                event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!");
+                            }
                         }
-                        if(event.getMessage().getContentRaw().startsWith("SunflowerDelete")){
-                            event.getChannel().sendMessage("Delete command under construction").queue();
+                        if(event.getMessage().getContentRaw().startsWith("SunflowerDeletePoints")){
+                            int pointsToDelete = 1;
+                            List<Member> victims = event.getMessage().getMentionedMembers();
+                            Member target = victims.get(0);
+                            String targetID = target.getId();
+                            String[] temp = event.getMessage().getContentRaw().split(" ");
+                            if(temp.length == 3){
+                                pointsToDelete = Integer.parseInt(temp[2]);
+                            }
+                            FTPClient client = new FTPClient();
+                            try {
+                                client.connect("ftp.arceus3251.com");
+                                boolean login = client.login("arceus3251-server", "325100Arc");
+                                if (login) {
+                                    try {
+                                        OutputStream out = null;
+                                        File file = new File("SunflowerAcademyData.txt");
+                                        try {
+                                            out = new FileOutputStream(file);
+                                        } catch (IOException ex) {
+                                            event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!").queue();
+                                        }
+                                        client.retrieveFile("SunflowerAcademyData.txt", out);
+                                        BufferedReader reader = new BufferedReader(new FileReader(file));
+                                        String line = reader.readLine();
+                                        boolean found = false;
+                                        while (line != null) {
+                                            if ((line.substring(0, line.indexOf("/")).equals(targetID))) {
+                                                found = true;
+                                                break;
+                                            } else {
+                                                line = reader.readLine();
+                                            }
+                                        }
+                                        if (!found) {
+                                            event.getChannel().sendMessage("This user doesn't exist!").queue();
+                                        } else {
+                                            BufferedWriter writer;
+                                            try{
+                                                File tempFile = new File("TempFile.txt");
+                                                writer = new BufferedWriter(new FileWriter(tempFile));
+                                                ArrayList<String> tempString = new ArrayList<>();
+                                                reader = new BufferedReader(new FileReader(file));
+                                                line = reader.readLine();
+                                                while(line != null) {
+                                                    tempString.add(line);
+                                                    line = reader.readLine();
+                                                }
+                                                for(String a: tempString){
+                                                    if(a.startsWith(targetID)){
+                                                        int points = Integer.parseInt(a.substring(a.indexOf("/")+1));
+                                                        points-=pointsToDelete;
+                                                        String newLine = targetID+"/"+points;
+                                                        tempString.set(tempString.indexOf(a), newLine);
+                                                    }
+                                                }
+                                                for(String a: tempString){
+                                                    writer.write(a);
+                                                    writer.newLine();
+                                                    writer.close();
+                                                }
+                                                File oldVersion = new File("SunflowerAcademyData.txt");
+                                                oldVersion.delete();
+                                                tempFile.renameTo(new File("SunflowerAcademyData.txt"));
+                                                if(login) {
+                                                    InputStream input = new FileInputStream(tempFile);
+                                                    client.storeFile("SunflowerAcademyData.txt", input);
+                                                    client.logout();
+                                                }
+                                            }
+                                            catch(IOException ex){
+                                                event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!");
+                                            }
+                                        }
+                                    } catch (IOException ex) {
+                                        event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!").queue();
+                                    }
+                                    client.logout();
+                                }
+                            }
+                            catch(IOException ex){
+                                event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more info!");
+                            }
                         }
                     }
                 }
