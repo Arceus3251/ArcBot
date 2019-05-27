@@ -414,8 +414,8 @@ public class ArcCore extends ListenerAdapter {
                             Member target = victims.get(0);
                             String targetID = target.getId();
                             String[] temp = event.getMessage().getContentRaw().split(" ");
-                            if(temp.length == 3){
-                                pointsToAdd = Integer.parseInt(temp[2]);
+                            if(temp.length == 4){
+                                pointsToAdd = Integer.parseInt(temp[3]);
                             }
                             FTPClient client = new FTPClient();
                             try {
@@ -498,8 +498,8 @@ public class ArcCore extends ListenerAdapter {
                             Member target = victims.get(0);
                             String targetID = target.getId();
                             String[] temp = event.getMessage().getContentRaw().split(" ");
-                            if(temp.length == 3){
-                                pointsToDelete = Integer.parseInt(temp[2]);
+                            if(temp.length == 4){
+                                pointsToDelete = Integer.parseInt(temp[3]);
                             }
                             FTPClient client = new FTPClient();
                             try {
