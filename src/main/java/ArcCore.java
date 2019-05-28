@@ -1,19 +1,15 @@
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import org.jetbrains.annotations.NotNull;
-import org.apache.commons.net.ftp.FTPClient;
 
 import java.io.*;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 public class ArcCore extends ListenerAdapter {
     @Override
@@ -348,10 +344,16 @@ public class ArcCore extends ListenerAdapter {
             if(event.getGuild().getId().equals("581287208594571265")){
                 if(!event.getMessage().getAuthor().getId().equals("487696031417499649")) {
                     //Anyone Commands
-                    if(event.getMessage().getContentRaw().equals("SunflowerHelp")) {
-                        event.getChannel().sendMessage("This Module is current under construction, please contact Arceus3251 for any help or suggestions!").queue();
+                    if(event.getMessage().getContentRaw().equals("SFAHelp")) {
+                        String output = "SFAPoints <User> - Gets the points of a specified user, just use SFAPoints for own points\n"+
+                                "==Leader Only Commands==\n"+
+                                "SFAAddPoints <User> <Points> - Adds points to a specified user\n"+
+                                "SFADeletePoints <User> <Points> - Removes points from a specified user\n"+
+                                "SFAAddUser <User> - Registers a new user to the SFA\n"+
+                                "SFADeleteUser <User> - Removes a user from the SFA";
+                        event.getChannel().sendMessage(output).queue();
                     }
-                    if(event.getMessage().getContentRaw().startsWith("SunflowerPoints")){
+                    if(event.getMessage().getContentRaw().startsWith("SFAPoints")){
                         Member target;
                         String targetID;
                         List<Member> victims = event.getMessage().getMentionedMembers();
@@ -389,7 +391,7 @@ public class ArcCore extends ListenerAdapter {
                     }
                     //Leader Only Commands
                     if((event.getMember().getRoles()).toString().contains("R:Leaders(581289763282223104)")){
-                        if(event.getMessage().getContentRaw().startsWith("SunflowerAddPoints")){
+                        if(event.getMessage().getContentRaw().startsWith("SFAAddPoints")){
                             int pointsToAdd = 1;
                             List<Member> victims = event.getMessage().getMentionedMembers();
                             Member target = victims.get(0);
@@ -403,13 +405,10 @@ public class ArcCore extends ListenerAdapter {
                             }
                             File file = new File("SunflowerAcademyData.txt");
                             file.canRead();
-                            File tempFile = new File("tempFile.txt");
-                            tempFile.canWrite();
                             BufferedReader reader;
                             BufferedWriter writer;
                             try{
                                 reader = new BufferedReader(new FileReader(file));
-                                writer = new BufferedWriter(new FileWriter(tempFile));
                                 String line = reader.readLine();
                                 ArrayList<String> lines = new ArrayList<>();
                                 while(line!=null){
@@ -425,20 +424,21 @@ public class ArcCore extends ListenerAdapter {
                                         lines.set(lines.indexOf(a), newLine);
                                     }
                                 }
+                                file.delete();
+                                file = new File("SunflowerAcademyData.txt");
+                                file.canWrite();
+                                writer = new BufferedWriter(new FileWriter(file));
                                 for(String a: lines){
                                     writer.write(a);
                                     writer.newLine();
                                 }
                                 writer.close();
-                                File oldVersion = new File("SunflowerAcademyData.txt");
-                                oldVersion.delete();
-                                tempFile.renameTo(new File("SunFlowerAcademyData.txt"));
                             }
                             catch(IOException ex){
                                 event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more information!").queue();
                             }
                         }
-                        if(event.getMessage().getContentRaw().startsWith("SunflowerDeletePoints")){
+                        if(event.getMessage().getContentRaw().startsWith("SFADeletePoints")){
                             int pointsToDelete = 1;
                             List<Member> victims = event.getMessage().getMentionedMembers();
                             Member target = victims.get(0);
@@ -452,13 +452,10 @@ public class ArcCore extends ListenerAdapter {
                             }
                             File file = new File("SunflowerAcademyData.txt");
                             file.canRead();
-                            File tempFile = new File("tempFile.txt");
-                            tempFile.canWrite();
                             BufferedReader reader;
                             BufferedWriter writer;
                             try{
                                 reader = new BufferedReader(new FileReader(file));
-                                writer = new BufferedWriter(new FileWriter(tempFile));
                                 String line = reader.readLine();
                                 ArrayList<String> lines = new ArrayList<>();
                                 while(line!=null){
@@ -474,27 +471,29 @@ public class ArcCore extends ListenerAdapter {
                                         lines.set(lines.indexOf(a), newLine);
                                     }
                                 }
+                                file.delete();
+                                file = new File("SunflowerAcademyData.txt");
+                                file.canWrite();
+                                writer = new BufferedWriter(new FileWriter(file));
                                 for(String a: lines){
                                     writer.write(a);
                                     writer.newLine();
                                 }
                                 writer.close();
-                                File oldVersion = new File("SunflowerAcademyData.txt");
-                                oldVersion.delete();
-                                tempFile.renameTo(new File("SunFlowerAcademyData.txt"));
                             }
                             catch(IOException ex){
                                 event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more information!").queue();
                             }
                         }
-                        if(event.getMessage().getContentRaw().startsWith("SunflowerAddUser")){
+                        if(event.getMessage().getContentRaw().startsWith("SFAAddUser")){
                             List<Member> victims = event.getMessage().getMentionedMembers();
                             String targetID = victims.get(0).getId();
                             BufferedReader reader;
                             BufferedWriter writer;
                             ArrayList<String> members = new ArrayList<>();
                             try{
-                                reader = new BufferedReader(new FileReader(new File("SunflowerAcademyData.txt")));
+                                File file = new File("SunflowerAcademyData.txt");
+                                reader = new BufferedReader(new FileReader(file));
                                 String line = reader.readLine();
                                 boolean found = false;
                                 while(line!=null){
@@ -512,7 +511,7 @@ public class ArcCore extends ListenerAdapter {
                                     event.getChannel().sendMessage("Already a member!").queue();
                                 }
                                 if(!found){
-                                    writer = new BufferedWriter(new FileWriter(new File("SunflowerAcademyData.txt")));
+                                    writer = new BufferedWriter(new FileWriter(file));
                                     for(String a: members){
                                         writer.write(a);
                                         writer.newLine();
@@ -525,13 +524,14 @@ public class ArcCore extends ListenerAdapter {
                                 event.getChannel().sendMessage("Something went wrong! Consult Arceus3251 for more information!").queue();
                             }
                         }
-                        if(event.getMessage().getContentRaw().startsWith("SunflowerDeleteUser")){
+                        if(event.getMessage().getContentRaw().startsWith("SFADeleteUser")){
                             List<Member> victims = event.getMessage().getMentionedMembers();
                             String targetID = victims.get(0).getId();
                             BufferedReader reader;
                             BufferedWriter writer;
                             try{
-                                reader = new BufferedReader(new FileReader(new File("SunflowerAcademyData.txt")));
+                                File file = new File("SunflowerAcademyData.txt");
+                                reader = new BufferedReader(new FileReader(file));
                                 String line = reader.readLine();
                                 boolean found = false;
                                 while(line!=null){
@@ -545,25 +545,73 @@ public class ArcCore extends ListenerAdapter {
                                 }
                                 if(found){
                                     ArrayList<String> members = new ArrayList<>();
-                                    reader = new BufferedReader(new FileReader(new File("SunflowerAcademyData.txt")));
+                                    ListIterator<String> iterator = new ListIterator<String>() {
+                                        @Override
+                                        public boolean hasNext() {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public String next() {
+                                            return null;
+                                        }
+
+                                        @Override
+                                        public boolean hasPrevious() {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public String previous() {
+                                            return null;
+                                        }
+
+                                        @Override
+                                        public int nextIndex() {
+                                            return 0;
+                                        }
+
+                                        @Override
+                                        public int previousIndex() {
+                                            return 0;
+                                        }
+
+                                        @Override
+                                        public void remove() {
+
+                                        }
+
+                                        @Override
+                                        public void set(String s) {
+
+                                        }
+
+                                        @Override
+                                        public void add(String s) {
+
+                                        }
+                                    };
+                                    reader = new BufferedReader(new FileReader(file));
                                     line = reader.readLine();
                                     while(line!=null){
-                                        members.add(line);
+                                        iterator.add(line);
                                         line = reader.readLine();
                                     }
-                                    for(String a: members){
+                                    reader.close();
+                                    while(iterator.hasNext()){
+                                        String a = iterator.next();
                                         if(a.contains(targetID)){
                                             members.remove(a);
                                         }
                                     }
-                                    reader.close();
-                                    File tempFile = new File("TempFile.txt");
-                                    writer = new BufferedWriter(new FileWriter(tempFile));
+                                    file.delete();
+                                    file = new File("SunflowerAcademyData.txt");
+                                    writer = new BufferedWriter(new FileWriter(file));
                                     for(String a: members){
                                         writer.write(a);
                                         writer.newLine();
                                     }
-                                    tempFile.renameTo(new File("SunflowerAcademyData.txt"));
+                                    writer.close();
                                 }
                             }
                             catch(IOException ex){
