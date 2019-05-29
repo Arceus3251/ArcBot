@@ -389,6 +389,71 @@ public class ArcCore extends ListenerAdapter {
                             event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more Information").queue();
                         }
                     }
+                    if(event.getMessage().getContentRaw().startsWith("SFAGive")){
+                        String giverID = event.getAuthor().getId();
+                        List<Member> recipient = event.getMessage().getMentionedMembers();
+                        String recipientID = recipient.get(0).getId();
+                        String[] parts = event.getMessage().getContentRaw().split(" ");
+                        int pointsTransfer = Integer.parseInt(parts[2]);
+                        if(pointsTransfer<0){
+                            event.getChannel().sendMessage("Don't steal!").queue();
+                        }
+                        else {
+                            try {
+                                File file = new File("SunflowerAcademyData.txt");
+                                BufferedReader reader = new BufferedReader(new FileReader(file));
+                                boolean existA = false;
+                                boolean existB = false;
+                                ArrayList<String> lines = new ArrayList<>();
+                                String line = reader.readLine();
+                                while (line != null) {
+                                    if (line.startsWith(giverID)) {
+                                        existA = true;
+                                    }
+                                    if (line.startsWith(recipientID)) {
+                                        existB = true;
+                                    }
+                                    lines.add(line);
+                                    line = reader.readLine();
+                                }
+                                reader.close();
+                                if (!existA) {
+                                    event.getChannel().sendMessage("You don't appear to be registered! Talk with a leader!").queue();
+                                }
+                                if (!existB) {
+                                    event.getChannel().sendMessage("The recipient doesn't appear to be registered! Have them speak with a leader!").queue();
+                                }
+                                if (existA && existB) {
+                                    for (String a : lines) {
+                                        if (a.startsWith(giverID)) {
+                                            int currentPoints = Integer.parseInt(a.substring(a.indexOf("/") + 1));
+                                            currentPoints -= pointsTransfer;
+                                            String newLine = giverID + "/" + currentPoints;
+                                            lines.set(lines.indexOf(a), newLine);
+                                        }
+                                        if (a.startsWith(recipientID)) {
+                                            int currentPoints = Integer.parseInt(a.substring(a.indexOf("/") + 1));
+                                            currentPoints += pointsTransfer;
+                                            String newLine = recipientID + "/" + currentPoints;
+                                            lines.set(lines.indexOf(a), newLine);
+                                        }
+                                    }
+                                    file.delete();
+                                    file = new File("SunflowerAcademyData.txt");
+                                    file.canWrite();
+                                    file.canRead();
+                                    BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                                    for (String a : lines) {
+                                        writer.write(a);
+                                        writer.newLine();
+                                    }
+                                    writer.close();
+                                }
+                            } catch (IOException ex) {
+                                event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more information!").queue();
+                            }
+                        }
+                    }
                     //Leader Only Commands
                     if((event.getMember().getRoles()).toString().contains("R:Leaders(581289763282223104)")){
                         if(event.getMessage().getContentRaw().startsWith("SFAAddPoints")){
