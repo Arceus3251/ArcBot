@@ -1,15 +1,18 @@
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.channel.category.CategoryCreateEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.managers.GuildController;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 public class ArcCore extends ListenerAdapter {
     @Override
@@ -91,7 +94,7 @@ public class ArcCore extends ListenerAdapter {
                 }
                 if (received.equals("Link")) {
                     try {
-                        event.getChannel().sendMessage("https://discordapp.com/channels/" + (event.getGuild().getId()) + "/" + event.getMember().getVoiceState().getChannel().getId()).queue();
+                        event.getChannel().sendMessage("Screenshare link for "+event.getMember().getVoiceState().getChannel().getName()+": https://discordapp.com/channels/" + (event.getGuild().getId()) + "/" + event.getMember().getVoiceState().getChannel().getId()).queue();
                     } catch (NullPointerException ex) {
                         System.out.println("Not Found");
                     }
@@ -324,7 +327,29 @@ public class ArcCore extends ListenerAdapter {
                 if (event.getMessage().getContentRaw().equalsIgnoreCase("lol")) {
                     event.getChannel().sendMessage("http://img0.liveinternet.ru/images/attach/c/10/111/18/111018368_RRyoSRR__SRRRRRSRRSSRRSRyo_RRyoSRRS.gif").queue();
                 }
-
+                //Structure Campaign Name, Dungeon Master.
+                if (event.getMessage().getContentRaw().startsWith("New Campaign")) {
+                    String input = (event.getMessage().getContentRaw().replace("New Campaign ", ""));
+                    String[] info = input.split("\" ");
+                    String campaignName = info[0].replaceAll(Character.toString('"'), "");
+                    String dungeonMaster = event.getMessage().getMentionedMembers().get(0).getId();
+                    GuildController gc = event.getMessage().getGuild().getController();
+                    gc.createCategory(campaignName).queue();
+                    gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById("375005981798825985")).queue();
+                    event.getChannel().sendMessage("Creating: "+campaignName).queue();
+                    gc.createRole().setName(campaignName).setColor(new Color(((int)(Math.random()*255)+1),((int)(Math.random()*255)+1),((int)(Math.random()*256)+1))).setHoisted(true).setMentionable(true).queue();
+                }
+                if(event.getMember().getId().equals("487696031417499649") && event.getMessage().getContentRaw().startsWith("Creating")){
+                    String campaignName = event.getMessage().getContentRaw().replace("Creating: ", "");
+                    Category cat = event.getMessage().getGuild().getCategoriesByName(campaignName, false).get(0);
+                    GuildController gc = event.getMessage().getGuild().getController();
+                    cat.createTextChannel("gameboard").queue();
+                    cat.createTextChannel("dungeon-master-notes").queue();
+                    cat.createTextChannel("planning-room").queue();
+                    cat.createTextChannel("session-summary").queue();
+                    cat.createTextChannel("pc-graveyard").queue();
+                    cat.createVoiceChannel("The Dungeon").queue();
+                }
             }
             if (event.getGuild().getName().equals("Dungeons and Dickholes")) {
                 if (event.getMessage().getContentRaw().contains("= (1)")) {
