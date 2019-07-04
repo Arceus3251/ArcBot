@@ -331,8 +331,8 @@ public class ArcCore extends ListenerAdapter {
                 if (event.getMessage().getContentRaw().startsWith("New Campaign")) {
                     String input = (event.getMessage().getContentRaw().replace("New Campaign ", ""));
                     String[] info = input.split("\" ");
-                    String campaignName = info[0].replaceAll(Character.toString('"'), "");
-                    String dungeonMaster = event.getMessage().getMentionedMembers().get(0).getId();
+                    String campaignName = info[0].substring(0, info[0].indexOf("<@!"));
+                    Long dungeonMaster = event.getMessage().getMentionedMembers().get(0).getIdLong();
                     GuildController gc = event.getMessage().getGuild().getController();
                     gc.createCategory(campaignName).queue();
                     gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById("375005981798825985")).queue();
@@ -342,13 +342,21 @@ public class ArcCore extends ListenerAdapter {
                 if(event.getMember().getId().equals("487696031417499649") && event.getMessage().getContentRaw().startsWith("Creating")){
                     String campaignName = event.getMessage().getContentRaw().replace("Creating: ", "");
                     Category cat = event.getMessage().getGuild().getCategoriesByName(campaignName, false).get(0);
-                    GuildController gc = event.getMessage().getGuild().getController();
                     cat.createTextChannel("gameboard").queue();
                     cat.createTextChannel("dungeon-master-notes").queue();
                     cat.createTextChannel("planning-room").queue();
                     cat.createTextChannel("session-summary").queue();
                     cat.createTextChannel("pc-graveyard").queue();
                     cat.createVoiceChannel("The Dungeon").queue();
+                    event.getChannel().sendMessage("Created: "+campaignName).queue();
+                }
+                if(event.getMember().getId().equals("487696031417499649") && (event.getMessage().getContentRaw().startsWith("Created: "))){
+                    String campaignName = event.getMessage().getContentRaw().replace("Created: ", "");
+                    Category cat = event.getGuild().getCategoriesByName(campaignName, false).get(0);
+                    for(GuildChannel a: cat.getChannels()){
+                        System.out.println(a.getName());
+                    }
+                    GuildController gc = new GuildController(event.getGuild());
                 }
             }
             if (event.getGuild().getName().equals("Dungeons and Dickholes")) {
