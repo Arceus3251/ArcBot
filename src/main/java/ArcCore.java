@@ -1,18 +1,17 @@
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.channel.category.CategoryCreateEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.managers.GuildController;
 import org.jetbrains.annotations.NotNull;
-
 import java.awt.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ArcCore extends ListenerAdapter {
     @Override
@@ -314,7 +313,7 @@ public class ArcCore extends ListenerAdapter {
                 event.getChannel().sendMessage("No, send dunes, I wanna see them sexy landforms").queue();
             }
             //Commands only for DnD Server.
-            if (event.getGuild().getName().equals("D&D Plaza")) {
+            if (event.getGuild().getName().equals("D&D Plaza")|| event.getGuild().getName().equals("Arceus's Testing Grounds")) {
                 if (event.getMessage().getContentRaw().equals("1")) {
                     event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
                 }
@@ -329,18 +328,33 @@ public class ArcCore extends ListenerAdapter {
                 }
                 //Structure Campaign Name, Dungeon Master.
                 if (event.getMessage().getContentRaw().startsWith("New Campaign")) {
+                    Long DMRole = 0L;
+                    if (event.getGuild().getName().equals("D&D Plaza")) {
+                        DMRole = 375005981798825985L;
+                    }
+                    if (event.getGuild().getName().equals("Arceus's Testing Grounds")) {
+                        DMRole = 596532612902813716L;
+                    }
                     String input = (event.getMessage().getContentRaw().replace("New Campaign ", ""));
-                    String[] info = input.split("\" ");
-                    String campaignName = info[0].substring(0, info[0].indexOf("<@!"));
+                    String[] info = input.split(" / ");
+                    String campaignName = info[0];
                     Long dungeonMaster = event.getMessage().getMentionedMembers().get(0).getIdLong();
                     GuildController gc = event.getMessage().getGuild().getController();
                     gc.createCategory(campaignName).queue();
-                    gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById("375005981798825985")).queue();
-                    event.getChannel().sendMessage("Creating: "+campaignName).queue();
+                    gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById(DMRole)).queue();
+                    event.getChannel().sendMessage("Creating: " + campaignName + " DM: <@!" + dungeonMaster + ">").queue();
                     gc.createRole().setName(campaignName).setColor(new Color(((int)(Math.random()*255)+1),((int)(Math.random()*255)+1),((int)(Math.random()*256)+1))).setHoisted(true).setMentionable(true).queue();
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException ex) {
+                        event.getChannel().sendMessage("Something went wrong! You fucked up, Arceus").queue();
+                    }
                 }
                 if(event.getMember().getId().equals("487696031417499649") && event.getMessage().getContentRaw().startsWith("Creating")){
-                    String campaignName = event.getMessage().getContentRaw().replace("Creating: ", "");
+                    String info = event.getMessage().getContentRaw().replace("Creating: ", "");
+                    String campaignName = info.substring(0, info.indexOf(" DM"));
+                    String dungeonMaster = info.substring(info.indexOf(" DM"));
+                    dungeonMaster = dungeonMaster.replaceFirst(" DM: ", "");
                     Category cat = event.getMessage().getGuild().getCategoriesByName(campaignName, false).get(0);
                     cat.createTextChannel("gameboard").queue();
                     cat.createTextChannel("dungeon-master-notes").queue();
@@ -348,13 +362,41 @@ public class ArcCore extends ListenerAdapter {
                     cat.createTextChannel("session-summary").queue();
                     cat.createTextChannel("pc-graveyard").queue();
                     cat.createVoiceChannel("The Dungeon").queue();
-                    event.getChannel().sendMessage("Created: "+campaignName).queue();
+                    Role role = event.getGuild().getRolesByName(campaignName, false).get(0);
+                    cat.createPermissionOverride(event.getGuild().getPublicRole()).setDeny(Permission.VIEW_CHANNEL).queue();
+                    cat.createPermissionOverride(role).setAllow(Permission.VIEW_CHANNEL).queue();
+                    event.getChannel().sendMessage("Created: "+campaignName+ " DM: "+dungeonMaster).queue();
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    }
+                    catch(InterruptedException ex){
+                        event.getChannel().sendMessage("Something went wrong! You fucked up, Arceus").queue();
+                    }
                 }
                 if(event.getMember().getId().equals("487696031417499649") && (event.getMessage().getContentRaw().startsWith("Created: "))){
-                    String campaignName = event.getMessage().getContentRaw().replace("Created: ", "");
+                    String info = event.getMessage().getContentRaw().replace("Created: ", "");
+                    String campaignName = info.substring(0, info.indexOf(" DM"));
+                    String dungeonMaster = info.substring(info.indexOf(" DM"));
                     Category cat = event.getGuild().getCategoriesByName(campaignName, false).get(0);
-                    for(GuildChannel a: cat.getChannels()){
-                        System.out.println(a.getName());
+                    List<GuildChannel> channels = cat.getChannels();
+                    for(int i = 0; i<channels.size(); i++){
+                        if(i==1){
+                            //Only the DM can type and read
+                            TextChannel currentChannel = (TextChannel)channels.get(i);
+                            currentChannel.putPermissionOverride(event.getGuild().getRolesByName(campaignName, false).get(0)).setDeny(Permission.VIEW_CHANNEL).queue();
+                            currentChannel.createPermissionOverride(event.getMessage().getMentionedMembers().get(0)).setAllow(Permission.VIEW_CHANNEL).queue();
+                        }
+                        if(i==2){
+                            //Only the players can read this
+                            TextChannel currentChannel = (TextChannel)channels.get(i);
+                            currentChannel.createPermissionOverride(event.getMessage().getMentionedMembers().get(0)).setDeny(Permission.VIEW_CHANNEL).queue();
+                        }
+                        if(i==4){
+                            //DM Can type, everyone can read
+                            TextChannel currentChannel = (TextChannel)channels.get(i);
+                            currentChannel.putPermissionOverride(event.getGuild().getRolesByName(campaignName, false).get(0)).setDeny(Permission.MESSAGE_WRITE).queue();
+                            currentChannel.createPermissionOverride(event.getMessage().getMentionedMembers().get(0)).setAllow(Permission.MESSAGE_WRITE).queue();
+                        }
                     }
                     GuildController gc = new GuildController(event.getGuild());
                 }
