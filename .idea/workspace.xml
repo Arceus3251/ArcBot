@@ -7,11 +7,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5893278a-825d-41f2-be25-6b69ee404c70" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Victi.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Victi.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Victi.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/ArcBot_reborn_jar/ArcBot-reborn.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/ArcBot_reborn_jar/ArcBot-reborn.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/ArcCore.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/ArcCore.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ArcCore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArcCore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/DatagramSocketFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/DatagramSocketFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/DefaultSocketFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/DefaultSocketFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/PrintCommandListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/PrintCommandListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ProtocolCommandListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ProtocolCommandListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/SocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/bsd/RCommandClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/bsd/RCommandClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/bsd/RExecClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/bsd/RExecClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/Configurable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/Configurable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPFileFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPFileFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPHTTPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPHTTPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPListParseEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPListParseEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPSClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPSClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPSSocketFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/FTPSSocketFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/parser/FTPFileEntryParserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/parser/FTPFileEntryParserFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/parser/FTPTimestampParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/parser/FTPTimestampParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/parser/MVSFTPEntryParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/parser/MVSFTPEntryParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/parser/OS400FTPEntryParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ftp/parser/OS400FTPEntryParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/imap/AuthenticatingIMAPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/imap/AuthenticatingIMAPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/imap/IMAP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/imap/IMAP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/imap/IMAPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/imap/IMAPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/io/CRLFLineReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/io/CRLFLineReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/io/CopyStreamListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/io/CopyStreamListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/io/FromNetASCIIInputStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/io/FromNetASCIIInputStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/nntp/NNTPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/nntp/NNTPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/nntp/Threadable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/nntp/Threadable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ntp/NtpV3Packet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/ntp/NtpV3Packet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/pop3/ExtendedPOP3Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/pop3/ExtendedPOP3Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/smtp/AuthenticatingSMTPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/smtp/AuthenticatingSMTPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/telnet/TelnetInputListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/telnet/TelnetInputListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/telnet/TelnetNotificationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/telnet/TelnetNotificationHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/util/Base64.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/util/Base64.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/util/KeyManagerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/util/KeyManagerUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/util/SSLContextUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/apache/commons/net/util/SSLContextUtils.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -31,16 +64,17 @@
     <session id="1030772064">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="20" />
+          <entry key="project.closed" value="24" />
           <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.1" value="6" />
-          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.5" value="4" />
-          <entry key="project.open.time.6" value="5" />
+          <entry key="project.open.time.5" value="5" />
+          <entry key="project.open.time.6" value="6" />
           <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="22" />
+          <entry key="project.opened" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -60,14 +94,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="27595" />
-          <entry key="txt" value="195" />
+          <entry key="java" value="27747" />
+          <entry key="txt" value="231" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="27595" />
-          <entry key="PLAIN_TEXT" value="195" />
+          <entry key="JAVA" value="27747" />
+          <entry key="PLAIN_TEXT" value="231" />
         </counts>
       </usages-collector>
     </session>
@@ -77,22 +111,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArcCore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="397" column="160" selection-start-line="397" selection-start-column="160" selection-end-line="397" selection-end-column="160" />
+            <state relative-caret-position="441">
+              <caret line="327" column="118" selection-start-line="327" selection-start-column="118" selection-end-line="327" selection-end-column="118" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#41187#41188#0" expanded="true" />
-                <element signature="e#41287#41288#0" expanded="true" />
-                <element signature="e#41401#41402#0" expanded="true" />
-                <element signature="e#41500#41501#0" expanded="true" />
-                <element signature="e#41622#41623#0" expanded="true" />
-                <element signature="e#41722#41723#0" expanded="true" />
-                <element signature="e#41840#41841#0" expanded="true" />
-                <element signature="e#41939#41940#0" expanded="true" />
-                <element signature="e#42055#42056#0" expanded="true" />
-                <element signature="e#42151#42152#0" expanded="true" />
-                <element signature="e#42271#42272#0" expanded="true" />
-                <element signature="e#42367#42368#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,8 +151,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="16" column="57" selection-end-line="21" />
+            <state relative-caret-position="336">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -141,8 +163,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArcPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="14" column="67" selection-end-line="38" />
+            <state relative-caret-position="483">
+              <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -547,17 +569,16 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="158" />
-    <option name="y" value="458" />
-    <option name="width" value="974" />
-    <option name="height" value="716" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -588,14 +609,16 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1562303793612" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1562340461311" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15311909" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -737,7 +760,14 @@
       <option name="project" value="LOCAL" />
       <updated>1562201036527</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Created DnD Campaign Created Roughly">
+      <created>1562303816738</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1562303816738</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -751,8 +781,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20202559" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21055438" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -761,7 +792,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3308026" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3308026" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -822,7 +853,8 @@
     <MESSAGE value="Fixed SunflowerStuff in theory" />
     <MESSAGE value="Added SFAGive as well as fixed minor bugs" />
     <MESSAGE value="Added DND Campaign create (Almost)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added DND Campaign create (Almost)" />
+    <MESSAGE value="Created DnD Campaign Created Roughly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created DnD Campaign Created Roughly" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -840,22 +872,10 @@
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.dv8tion/JDA/4.ALPHA.0_79/70980cfb4dcd58e9108a5994273fa3c49bf289c0/JDA-4.ALPHA.0_79-sources.jar!/net/dv8tion/jda/api/hooks/ListenerAdapter.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/ArcCore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="397" column="160" selection-start-line="397" selection-start-column="160" selection-end-line="397" selection-end-column="160" />
+        <state relative-caret-position="-168">
+          <caret line="328" column="96" lean-forward="true" selection-start-line="328" selection-start-column="96" selection-end-line="328" selection-end-column="96" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#41187#41188#0" expanded="true" />
-            <element signature="e#41287#41288#0" expanded="true" />
-            <element signature="e#41401#41402#0" expanded="true" />
-            <element signature="e#41500#41501#0" expanded="true" />
-            <element signature="e#41622#41623#0" expanded="true" />
-            <element signature="e#41722#41723#0" expanded="true" />
-            <element signature="e#41840#41841#0" expanded="true" />
-            <element signature="e#41939#41940#0" expanded="true" />
-            <element signature="e#42055#42056#0" expanded="true" />
-            <element signature="e#42151#42152#0" expanded="true" />
-            <element signature="e#42271#42272#0" expanded="true" />
-            <element signature="e#42367#42368#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -882,8 +902,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="16" column="57" selection-end-line="21" />
+        <state relative-caret-position="336">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -892,8 +912,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArcPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="14" column="67" selection-end-line="38" />
+        <state relative-caret-position="483">
+          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

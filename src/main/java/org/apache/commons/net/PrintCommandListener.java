@@ -181,7 +181,7 @@ public class PrintCommandListener implements ProtocolCommandListener
         int pos = msg.indexOf(SocketClient.NETASCII_EOL);
         if (pos > 0) {
             StringBuilder sb = new StringBuilder();
-            sb.append(msg.substring(0,pos));
+            sb.append(msg, 0, pos);
             sb.append(__eolMarker);
             sb.append(msg.substring(pos));
             return sb.toString();

@@ -19,7 +19,7 @@ package org.apache.commons.net.util;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -732,11 +732,7 @@ public class Base64 {
     }
 
     private byte[] getBytesUtf8(String pArray) {
-        try {
-            return pArray.getBytes("UTF8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        return pArray.getBytes(StandardCharsets.UTF_8);
     }
 
     /**
@@ -892,11 +888,7 @@ public class Base64 {
 
     private static String newStringUtf8(byte[] encode) {
         String str = null;
-        try {
-            str = new String(encode, "UTF8");
-        } catch (UnsupportedEncodingException ue) {
-            throw new RuntimeException(ue);
-        }
+        str = new String(encode, StandardCharsets.UTF_8);
         return str;
     }
 

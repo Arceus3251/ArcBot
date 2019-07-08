@@ -428,8 +428,7 @@ public class FTP extends SocketClient
                     __getReply();
                 }
             } catch (SocketTimeoutException e) {
-                IOException ioe = new IOException("Timed out waiting for initial connect reply");
-                ioe.initCause(e);
+                IOException ioe = new IOException("Timed out waiting for initial connect reply", e);
                 throw ioe;
             } finally {
                 _socket_.setSoTimeout(original);
@@ -538,8 +537,7 @@ public class FTP extends SocketClient
         return __commandBuffer.toString();
     }
 
-    private void __send(String message) throws IOException,
-            FTPConnectionClosedException, SocketException {
+    private void __send(String message) throws IOException {
         try{
             _controlOutput_.write(message);
             _controlOutput_.flush();

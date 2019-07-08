@@ -49,7 +49,7 @@ public interface CopyStreamListener extends EventListener
      * @param event The CopyStreamEvent fired by the copying of a block of
      *              bytes.
      */
-    public void bytesTransferred(CopyStreamEvent event);
+    void bytesTransferred(CopyStreamEvent event);
 
 
     /**
@@ -65,7 +65,7 @@ public interface CopyStreamListener extends EventListener
      *        This may be equal to CopyStreamEvent.UNKNOWN_STREAM_SIZE if
      *        the size is unknown.
      */
-    public void bytesTransferred(long totalBytesTransferred,
-                                 int bytesTransferred,
-                                 long streamSize);
+    void bytesTransferred(long totalBytesTransferred,
+                          int bytesTransferred,
+                          long streamSize);
 }

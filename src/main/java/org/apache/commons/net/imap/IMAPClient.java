@@ -440,7 +440,7 @@ public class IMAPClient extends IMAP
         /** The unique identifier validity value of the mailbox. */
         UIDVALIDITY,
         /** The number of messages which do not have the \Seen flag set. */
-        UNSEEN;
+        UNSEEN
     }
 
     /**
@@ -579,7 +579,7 @@ public class IMAPClient extends IMAP
         /** Messages that do not have the specified keyword flag set. */
         UNKEYWORD,
         /** Messages that do not have the \Seen flag set. */
-        UNSEEN;
+        UNSEEN
     }
 
     /**
@@ -606,7 +606,7 @@ public class IMAPClient extends IMAP
         /** A prefix for RFC-822 item names. */
         RFC822,
         /** The unique identifier for the message. */
-        UID;
+        UID
     }
 
 }

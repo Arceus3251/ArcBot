@@ -46,7 +46,7 @@ public class FTPSSocketFactory extends SocketFactory {
     }
 
     @Override
-    public Socket createSocket(String address, int port) throws UnknownHostException, IOException {
+    public Socket createSocket(String address, int port) throws IOException {
         return this.context.getSocketFactory().createSocket(address, port);
     }
 
@@ -57,7 +57,7 @@ public class FTPSSocketFactory extends SocketFactory {
 
     @Override
     public Socket createSocket(String address, int port, InetAddress localAddress, int localPort)
-            throws UnknownHostException, IOException {
+            throws IOException {
         return this.context.getSocketFactory().createSocket(address, port, localAddress, localPort);
     }
 
@@ -101,10 +101,9 @@ public class FTPSSocketFactory extends SocketFactory {
 
     /** @param socket the socket
      * @return the socket
-     * @throws IOException  on error
      * @deprecated  (2.2) use {@link FTPSServerSocketFactory#init(java.net.ServerSocket)} */
     @Deprecated
-    public java.net.ServerSocket init(java.net.ServerSocket socket) throws IOException {
+    public java.net.ServerSocket init(java.net.ServerSocket socket) {
         ((javax.net.ssl.SSLServerSocket) socket).setUseClientMode(true);
         return socket;
     }

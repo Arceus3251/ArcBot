@@ -38,10 +38,8 @@ public class ExtendedPOP3Client extends POP3SClient
     /**
      * The default ExtendedPOP3Client constructor.
      * Creates a new Extended POP3 Client.
-     * @throws NoSuchAlgorithmException on error
      */
-    public ExtendedPOP3Client() throws NoSuchAlgorithmException
-    {
+    public ExtendedPOP3Client() {
         super();
     }
 
@@ -59,14 +57,11 @@ public class ExtendedPOP3Client extends POP3SClient
      *      cannot be instantiated by the Java runtime system.
      * @throws InvalidKeyException If the CRAM hash algorithm
      *      failed to use the given password.
-     * @throws InvalidKeySpecException If the CRAM hash algorithm
-     *      failed to use the given password.
      ***/
     public boolean auth(AUTH_METHOD method,
                         String username, String password)
                         throws IOException, NoSuchAlgorithmException,
-                        InvalidKeyException, InvalidKeySpecException
-    {
+                        InvalidKeyException {
         if (sendCommand(POP3Command.AUTH, method.getAuthName())
         != POP3Reply.OK_INT) {
             return false;
@@ -124,7 +119,7 @@ public class ExtendedPOP3Client extends POP3SClient
     /**
      * The enumeration of currently-supported authentication methods.
      */
-    public static enum AUTH_METHOD
+    public enum AUTH_METHOD
     {
         /** The standarised (RFC4616) PLAIN method, which sends the password unencrypted (insecure). */
         PLAIN("PLAIN"),

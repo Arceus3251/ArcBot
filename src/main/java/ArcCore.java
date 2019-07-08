@@ -19,9 +19,7 @@ public class ArcCore extends ListenerAdapter {
         AudioManager audioManager = event.getGuild().getAudioManager();
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        if (event.getMessage().getAuthor().getName().equals("DuckHunt")) {
-            return;
-        } else {
+        if(!event.getMessage().getAuthor().getName().equals("DuckHunt")){
             Main.panelArc.addLog(event.getAuthor().getName() + " in " + event.getChannel() + ": " + event.getMessage().getContentDisplay());
             if (event.getMessage().getContentRaw().startsWith("Arc")) {
                 //All Commands Beginning with Arc
@@ -69,13 +67,13 @@ public class ArcCore extends ListenerAdapter {
                 }
                 if (received.equals("Summon")) {
                     received = received.replace("Summon", "");
-                    if (event.getMember().getVoiceState().inVoiceChannel()) {
-                        try {
+                    try {
+                        if (event.getMember().getVoiceState().inVoiceChannel()) {
                             VoiceChannel mychannel = event.getMember().getVoiceState().getChannel();
                             audioManager.openAudioConnection(mychannel);
-                        } catch (NullPointerException ex) {
-                            event.getChannel().sendMessage("You're not in a voice channel!").queue();
                         }
+                    }catch (NullPointerException ex) {
+                        event.getChannel().sendMessage("You're not in a voice channel!").queue();
                     }
                 }
                 if (received.equals("Leave")) {
@@ -313,7 +311,7 @@ public class ArcCore extends ListenerAdapter {
                 event.getChannel().sendMessage("No, send dunes, I wanna see them sexy landforms").queue();
             }
             //Commands only for DnD Server.
-            if (event.getGuild().getName().equals("D&D Plaza")|| event.getGuild().getName().equals("Arceus's Testing Grounds")) {
+            if (event.getGuild().getName().equals("D&D Plaza")) {
                 if (event.getMessage().getContentRaw().equals("1")) {
                     event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
                 }
@@ -327,21 +325,14 @@ public class ArcCore extends ListenerAdapter {
                     event.getChannel().sendMessage("http://img0.liveinternet.ru/images/attach/c/10/111/18/111018368_RRyoSRR__SRRRRRSRRSSRRSRyo_RRyoSRRS.gif").queue();
                 }
                 //Structure Campaign Name, Dungeon Master.
-                if (event.getMessage().getContentRaw().startsWith("New Campaign")) {
-                    Long DMRole = 0L;
-                    if (event.getGuild().getName().equals("D&D Plaza")) {
-                        DMRole = 375005981798825985L;
-                    }
-                    if (event.getGuild().getName().equals("Arceus's Testing Grounds")) {
-                        DMRole = 596532612902813716L;
-                    }
+                if (event.getMessage().getContentRaw().startsWith("New Campaign") && event.getAuthor().getIdLong() == 239598274103738369L) {
                     String input = (event.getMessage().getContentRaw().replace("New Campaign ", ""));
                     String[] info = input.split(" / ");
                     String campaignName = info[0];
                     Long dungeonMaster = event.getMessage().getMentionedMembers().get(0).getIdLong();
                     GuildController gc = event.getMessage().getGuild().getController();
                     gc.createCategory(campaignName).queue();
-                    gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById(DMRole)).queue();
+                    gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById(375005981798825985L)).queue();
                     event.getChannel().sendMessage("Creating: " + campaignName + " DM: <@!" + dungeonMaster + ">").queue();
                     gc.createRole().setName(campaignName).setColor(new Color(((int)(Math.random()*255)+1),((int)(Math.random()*255)+1),((int)(Math.random()*256)+1))).setHoisted(true).setMentionable(true).queue();
                     try {

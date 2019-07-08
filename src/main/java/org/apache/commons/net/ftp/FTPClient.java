@@ -3066,7 +3066,7 @@ implements Configurable
     public FTPFile[] listFiles()
     throws IOException
     {
-        return listFiles((String) null);
+        return listFiles(null);
     }
 
     /**
@@ -3130,7 +3130,7 @@ implements Configurable
      * @since 3.0
      */
     public FTPFile[] listDirectories() throws IOException {
-        return listDirectories((String) null);
+        return listDirectories(null);
     }
 
     /**
@@ -3217,7 +3217,7 @@ implements Configurable
     public FTPListParseEngine initiateListParsing()
     throws IOException
     {
-        return initiateListParsing((String) null);
+        return initiateListParsing(null);
     }
 
     /**
@@ -3811,7 +3811,7 @@ implements Configurable
      *
      * @since 3.6
      */
-    public static interface HostnameResolver {
+    public interface HostnameResolver {
         String resolve(String hostname) throws UnknownHostException;
     }
 

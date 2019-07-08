@@ -27,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.Inet6Address;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,7 +128,7 @@ public class FTPHTTPClient extends FTPClient {
     }
 
     @Override
-    public void connect(String host, int port) throws SocketException, IOException {
+    public void connect(String host, int port) throws IOException {
 
         _socket_ = _socketFactory_.createSocket(proxyHost, proxyPort);
         _input_ = _socket_.getInputStream();
@@ -137,29 +138,27 @@ public class FTPHTTPClient extends FTPClient {
             socketIsReader = tunnelHandshake(host, port, _input_, _output_);
         }
         catch (Exception e) {
-            IOException ioe = new IOException("Could not connect to " + host+ " using port " + port);
-            ioe.initCause(e);
+            IOException ioe = new IOException("Could not connect to " + host+ " using port " + port, e);
             throw ioe;
         }
         super._connectAction_(socketIsReader);
     }
 
-    private BufferedReader tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException,
-    UnsupportedEncodingException {
+    private BufferedReader tunnelHandshake(String host, int port, InputStream input, OutputStream output) throws IOException {
         final String connectString = "CONNECT "  + host + ":" + port  + " HTTP/1.1";
         final String hostString = "Host: " + host + ":" + port;
 
         this.tunnelHost = host;
-        output.write(connectString.getBytes("UTF-8")); // TODO what is the correct encoding?
+        output.write(connectString.getBytes(StandardCharsets.UTF_8)); // TODO what is the correct encoding?
         output.write(CRLF);
-        output.write(hostString.getBytes("UTF-8"));
+        output.write(hostString.getBytes(StandardCharsets.UTF_8));
         output.write(CRLF);
 
         if (proxyUsername != null && proxyPassword != null) {
             final String auth = proxyUsername + ":" + proxyPassword;
             final String header = "Proxy-Authorization: Basic "
-                + base64.encodeToString(auth.getBytes("UTF-8"));
-            output.write(header.getBytes("UTF-8"));
+                + base64.encodeToString(auth.getBytes(StandardCharsets.UTF_8));
+            output.write(header.getBytes(StandardCharsets.UTF_8));
         }
         output.write(CRLF);
 

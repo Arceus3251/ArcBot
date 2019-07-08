@@ -411,10 +411,7 @@ public class MVSFTPEntryParser extends ConfigurableFTPFileEntryParserImpl {
      */
     private boolean parseUnixList(FTPFile file, String entry) {
         file = unixFTPEntryParser.parseFTPEntry(entry);
-        if (file == null) {
-            return false;
-        }
-        return true;
+        return file != null;
     }
 
     /**

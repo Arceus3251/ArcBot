@@ -261,10 +261,9 @@ public class FTPListParseEngine {
      * a filter such as {@link FTPFileFilters#NON_NULL} which does not
      * allow null entries.
      * @since 2.2
-     * @throws IOException - not ever thrown, may be removed in a later release
      */
     public FTPFile[] getFiles(FTPFileFilter filter)
-    throws IOException // TODO remove; not actually thrown
+    // TODO remove; not actually thrown
     {
         List<FTPFile> tmpResults = new ArrayList<FTPFile>();
         Iterator<String> iter = this.entries.iterator();
