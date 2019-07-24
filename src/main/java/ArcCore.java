@@ -21,7 +21,22 @@ public class ArcCore extends ListenerAdapter {
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
         File serverList = new File("./ServerList.txt");
         try {
+            BufferedReader reader = new BufferedReader(new FileReader(serverList));
+            ArrayList<String> lines = new ArrayList<>();
+            String line = reader.readLine();
+            while(line != null){
+                lines.add(line);
+            }
+            reader.close();
+            serverList.delete();
+            serverList = new File("ServerList.txt");
+            serverList.canWrite();
+            serverList.canRead();
             BufferedWriter writer = new BufferedWriter(new FileWriter(serverList));
+            for(String a: lines){
+                writer.write(a);
+                writer.newLine();
+            }
             writer.write(event.getGuild().getName());
             for (TextChannel a : event.getGuild().getTextChannels()) {
                 writer.newLine();
