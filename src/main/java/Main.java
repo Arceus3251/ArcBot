@@ -7,15 +7,19 @@ import javax.swing.*;
 
 public class Main extends ListenerAdapter {
     public static ArcPanel panelArc;
+    private static String token = "NDg3Njk2MDMxNDE3NDk5NjQ5.XMS8ZA.qCaDkk6l8EWkx4frYG2W8MCjkDA";
+    private static JDA builder;
     public static void main(String[] args)throws LoginException {
-        String token = "NDg3Njk2MDMxNDE3NDk5NjQ5.XMS8ZA.qCaDkk6l8EWkx4frYG2W8MCjkDA";
-        JDA builder = new JDABuilder(token).build();
         JFrame frame = new JFrame("ArcBot");
+        builder = new JDABuilder(token).build();
         panelArc = new ArcPanel();
         frame.setContentPane(panelArc.getContent());
         frame.setSize(300, 300);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         builder.addEventListener(new ArcCore());
+    }
+    public static JDA getBuilder(){
+        return builder;
     }
 }

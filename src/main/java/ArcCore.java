@@ -1,10 +1,13 @@
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.managers.GuildController;
 import org.jetbrains.annotations.NotNull;
+
+import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.math.BigInteger;
@@ -14,6 +17,23 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ArcCore extends ListenerAdapter {
+    @Override
+    public void onGuildJoin(@NotNull GuildJoinEvent event) {
+        File serverList = new File("./ServerList.txt");
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(serverList));
+            writer.write(event.getGuild().getName());
+            for (TextChannel a : event.getGuild().getTextChannels()) {
+                writer.newLine();
+                writer.write("#"+a.getName());
+            }
+            writer.newLine();
+            writer.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, ex.getStackTrace(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         AudioManager audioManager = event.getGuild().getAudioManager();
@@ -349,6 +369,7 @@ public class ArcCore extends ListenerAdapter {
                     Category cat = event.getMessage().getGuild().getCategoriesByName(campaignName, false).get(0);
                     cat.createTextChannel("gameboard").queue();
                     cat.createTextChannel("dungeon-master-notes").queue();
+                    cat.createTextChannel("dm-screen").queue();
                     cat.createTextChannel("planning-room").queue();
                     cat.createTextChannel("session-summary").queue();
                     cat.createTextChannel("pc-graveyard").queue();
@@ -371,18 +392,18 @@ public class ArcCore extends ListenerAdapter {
                     Category cat = event.getGuild().getCategoriesByName(campaignName, false).get(0);
                     List<GuildChannel> channels = cat.getChannels();
                     for(int i = 0; i<channels.size(); i++){
-                        if(i==1){
+                        if(i==1||i==2){
                             //Only the DM can type and read
                             TextChannel currentChannel = (TextChannel)channels.get(i);
                             currentChannel.putPermissionOverride(event.getGuild().getRolesByName(campaignName, false).get(0)).setDeny(Permission.VIEW_CHANNEL).queue();
                             currentChannel.createPermissionOverride(event.getMessage().getMentionedMembers().get(0)).setAllow(Permission.VIEW_CHANNEL).queue();
                         }
-                        if(i==2){
+                        if(i==3){
                             //Only the players can read this
                             TextChannel currentChannel = (TextChannel)channels.get(i);
                             currentChannel.createPermissionOverride(event.getMessage().getMentionedMembers().get(0)).setDeny(Permission.VIEW_CHANNEL).queue();
                         }
-                        if(i==4){
+                        if(i==5){
                             //DM Can type, everyone can read
                             TextChannel currentChannel = (TextChannel)channels.get(i);
                             currentChannel.putPermissionOverride(event.getGuild().getRolesByName(campaignName, false).get(0)).setDeny(Permission.MESSAGE_WRITE).queue();
@@ -404,6 +425,9 @@ public class ArcCore extends ListenerAdapter {
                 }
                 if (event.getMessage().getContentRaw().contains("= (19)")) {
                     event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527567698415190027/i-have-the-weirdest-boner.jpg").queue();
+                }
+                if (event.getMessage().getContentRaw().equalsIgnoreCase("lol")) {
+                    event.getChannel().sendMessage("http://img0.liveinternet.ru/images/attach/c/10/111/18/111018368_RRyoSRR__SRRRRRSRRSSRRSRyo_RRyoSRRS.gif").queue();
                 }
             }
             //Sunflower Academy Commands
@@ -432,7 +456,7 @@ public class ArcCore extends ListenerAdapter {
                         }
                         BufferedReader reader;
                         try{
-                            reader = new BufferedReader(new FileReader(new File("SunflowerAcademyData.txt")));
+                            reader = new BufferedReader(new FileReader(new File("./SunflowerAcademyData.txt")));
                             String line = reader.readLine();
                             boolean found = false;
                             while(line!=null){
@@ -453,6 +477,7 @@ public class ArcCore extends ListenerAdapter {
                         }
                         catch(IOException ex){
                             event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more Information").queue();
+                            JOptionPane.showMessageDialog(null, ex.getStackTrace());
                         }
                     }
                     if(event.getMessage().getContentRaw().startsWith("SFAGive")){
@@ -517,6 +542,7 @@ public class ArcCore extends ListenerAdapter {
                                 }
                             } catch (IOException ex) {
                                 event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more information!").queue();
+                                JOptionPane.showMessageDialog(null, ex.getStackTrace());
                             }
                         }
                     }
@@ -567,6 +593,7 @@ public class ArcCore extends ListenerAdapter {
                             }
                             catch(IOException ex){
                                 event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more information!").queue();
+                                JOptionPane.showMessageDialog(null, ex.getStackTrace());
                             }
                         }
                         if(event.getMessage().getContentRaw().startsWith("SFADeletePoints")){
@@ -614,6 +641,7 @@ public class ArcCore extends ListenerAdapter {
                             }
                             catch(IOException ex){
                                 event.getChannel().sendMessage("Something went wrong! Contact Arceus3251 for more information!").queue();
+                                JOptionPane.showMessageDialog(null, ex.getStackTrace());
                             }
                         }
                         if(event.getMessage().getContentRaw().startsWith("SFAAddUser")){
@@ -653,6 +681,7 @@ public class ArcCore extends ListenerAdapter {
                             }
                             catch(IOException ex){
                                 event.getChannel().sendMessage("Something went wrong! Consult Arceus3251 for more information!").queue();
+                                JOptionPane.showMessageDialog(null, ex.getStackTrace());
                             }
                         }
                         if(event.getMessage().getContentRaw().startsWith("SFADeleteUser")){
@@ -747,6 +776,7 @@ public class ArcCore extends ListenerAdapter {
                             }
                             catch(IOException ex){
                                 event.getChannel().sendMessage("Something went Wrong! Consult Arceus3251 for more information!").queue();
+                                JOptionPane.showMessageDialog(null, ex.getStackTrace());
                             }
                         }
                     }
@@ -874,7 +904,6 @@ public class ArcCore extends ListenerAdapter {
 
     //Changes Text to Morse
     private static String TextMorse(String received) {
-        String outputMorse;
         StringBuilder sb = new StringBuilder();
         String input = received.toLowerCase();
         char[] charArray = input.toCharArray();
@@ -893,7 +922,7 @@ public class ArcCore extends ListenerAdapter {
                     sb.append("-.. ");
                     break;
                 case 'e':
-                    sb.append(" ");
+                    sb.append(". ");
                     break;
                 case 'f':
                     sb.append("..-. ");
@@ -905,7 +934,7 @@ public class ArcCore extends ListenerAdapter {
                     sb.append(".... ");
                     break;
                 case 'i':
-                    sb.append("build ");
+                    sb.append(".. ");
                     break;
                 case 'j':
                     sb.append(".--- ");
@@ -1023,8 +1052,7 @@ public class ArcCore extends ListenerAdapter {
                     break;
             }
         }
-        outputMorse = sb.toString();
-        return (outputMorse);
+        return sb.toString();
     }
 }
 
