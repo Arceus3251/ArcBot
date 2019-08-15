@@ -26,6 +26,7 @@ public class ArcCore extends ListenerAdapter {
             String line = reader.readLine();
             while(line != null){
                 lines.add(line);
+                line = reader.readLine();
             }
             reader.close();
             serverList.delete();
@@ -346,28 +347,34 @@ public class ArcCore extends ListenerAdapter {
                 event.getChannel().sendMessage("No, send dunes, I wanna see them sexy landforms").queue();
             }
             //Commands only for DnD Server.
-            if (event.getGuild().getName().equals("D&D Plaza")) {
-                if (event.getMessage().getContentRaw().equals("1")) {
-                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
-                }
-                if (event.getMessage().getContentRaw().equals("20")) {
-                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557407756288031/tumblr_inline_mqrh26jIU11qz4rgp.jpg").queue();
-                }
-                if (event.getMessage().getContentRaw().equals("10")) {
-                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/488083894088761345/491763358056448007/image0.jpg").queue();
-                }
-                if (event.getMessage().getContentRaw().equalsIgnoreCase("lol")) {
-                    event.getChannel().sendMessage("http://img0.liveinternet.ru/images/attach/c/10/111/18/111018368_RRyoSRR__SRRRRRSRRSSRRSRyo_RRyoSRRS.gif").queue();
+            if (event.getGuild().getName().equals("D&D Plaza")||(event.getGuild().getName().equals("Z D&D Plazza"))) {
+                if(event.getGuild().getName().equals("D&D Plaza")) {
+                    if (event.getMessage().getContentRaw().equals("1")) {
+                        event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
+                    }
+                    if (event.getMessage().getContentRaw().equals("20")) {
+                        event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557407756288031/tumblr_inline_mqrh26jIU11qz4rgp.jpg").queue();
+                    }
+                    if (event.getMessage().getContentRaw().equals("10")) {
+                        event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/488083894088761345/491763358056448007/image0.jpg").queue();
+                    }
+                    if (event.getMessage().getContentRaw().equalsIgnoreCase("lol")) {
+                        event.getChannel().sendMessage("http://img0.liveinternet.ru/images/attach/c/10/111/18/111018368_RRyoSRR__SRRRRRSRRSSRRSRyo_RRyoSRRS.gif").queue();
+                    }
                 }
                 //Structure Campaign Name, Dungeon Master.
-                if (event.getMessage().getContentRaw().startsWith("New Campaign") && event.getAuthor().getIdLong() == 239598274103738369L) {
+                if (event.getMessage().getContentRaw().startsWith("New Campaign") && event.getAuthor().getIdLong() == 239598274103738369L||((event.getGuild().getName().equals("Z D&D Plazza"))&&(event.getAuthor().getIdLong()==425787421385555989L))) {
                     String input = (event.getMessage().getContentRaw().replace("New Campaign ", ""));
                     String[] info = input.split(" / ");
                     String campaignName = info[0];
                     Long dungeonMaster = event.getMessage().getMentionedMembers().get(0).getIdLong();
                     GuildController gc = event.getMessage().getGuild().getController();
                     gc.createCategory(campaignName).queue();
-                    gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById(375005981798825985L)).queue();
+                    Long dmRole = 375005981798825985L;
+                    if(event.getGuild().getName().equals("Z D&D Plazza")){
+                        dmRole = 611668607138791445L;
+                    }
+                    gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById(dmRole)).queue();
                     event.getChannel().sendMessage("Creating: " + campaignName + " DM: <@!" + dungeonMaster + ">").queue();
                     gc.createRole().setName(campaignName).setColor(new Color(((int)(Math.random()*255)+1),((int)(Math.random()*255)+1),((int)(Math.random()*256)+1))).setHoisted(true).setMentionable(true).queue();
                     try {
