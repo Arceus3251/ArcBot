@@ -363,7 +363,7 @@ public class ArcCore extends ListenerAdapter {
                     }
                 }
                 //Structure Campaign Name, Dungeon Master.
-                if (event.getMessage().getContentRaw().startsWith("New Campaign") && event.getAuthor().getIdLong() == 239598274103738369L||((event.getGuild().getName().equals("Z D&D Plazza"))&&(event.getAuthor().getIdLong()==425787421385555989L))) {
+                if (event.getMessage().getContentRaw().startsWith("New Campaign") && ((event.getAuthor().getIdLong()==239598274103738369L)||event.getAuthor().getIdLong()==425787421385555989L)) {
                     String input = (event.getMessage().getContentRaw().replace("New Campaign ", ""));
                     String[] info = input.split(" / ");
                     String campaignName = info[0];
