@@ -363,24 +363,26 @@ public class ArcCore extends ListenerAdapter {
                     }
                 }
                 //Structure Campaign Name, Dungeon Master.
-                if (event.getMessage().getContentRaw().startsWith("New Campaign") && ((event.getAuthor().getIdLong()==239598274103738369L)||event.getAuthor().getIdLong()==425787421385555989L)) {
-                    String input = (event.getMessage().getContentRaw().replace("New Campaign ", ""));
-                    String[] info = input.split(" / ");
-                    String campaignName = info[0];
-                    Long dungeonMaster = event.getMessage().getMentionedMembers().get(0).getIdLong();
-                    GuildController gc = event.getMessage().getGuild().getController();
-                    gc.createCategory(campaignName).queue();
-                    Long dmRole = 375005981798825985L;
-                    if(event.getGuild().getName().equals("Z D&D Plazza")){
-                        dmRole = 611668607138791445L;
-                    }
-                    gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById(dmRole)).queue();
-                    event.getChannel().sendMessage("Creating: " + campaignName + " DM: <@!" + dungeonMaster + ">").queue();
-                    gc.createRole().setName(campaignName).setColor(new Color(((int)(Math.random()*255)+1),((int)(Math.random()*255)+1),((int)(Math.random()*256)+1))).setHoisted(true).setMentionable(true).queue();
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (InterruptedException ex) {
-                        event.getChannel().sendMessage("Something went wrong! You fucked up, Arceus").queue();
+                if (event.getMessage().getContentRaw().startsWith("New Campaign")) {
+                    if (event.getAuthor().getIdLong() == 239598274103738369L || event.getAuthor().getIdLong() == 425787421385555989L) {
+                        String input = (event.getMessage().getContentRaw().replace("New Campaign ", ""));
+                        String[] info = input.split(" / ");
+                        String campaignName = info[0];
+                        Long dungeonMaster = event.getMessage().getMentionedMembers().get(0).getIdLong();
+                        GuildController gc = event.getMessage().getGuild().getController();
+                        gc.createCategory(campaignName).queue();
+                        Long dmRole = 375005981798825985L;
+                        if (event.getGuild().getName().equals("Z D&D Plazza")) {
+                            dmRole = 611668607138791445L;
+                        }
+                        gc.addSingleRoleToMember(event.getGuild().getMemberById(dungeonMaster), event.getGuild().getRoleById(dmRole)).queue();
+                        event.getChannel().sendMessage("Creating: " + campaignName + " DM: <@!" + dungeonMaster + ">").queue();
+                        gc.createRole().setName(campaignName).setColor(new Color(((int) (Math.random() * 255) + 1), ((int) (Math.random() * 255) + 1), ((int) (Math.random() * 256) + 1))).setHoisted(true).setMentionable(true).queue();
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException ex) {
+                            event.getChannel().sendMessage("Something went wrong! You fucked up, Arceus").queue();
+                        }
                     }
                 }
                 if(event.getMember().getId().equals("487696031417499649") && event.getMessage().getContentRaw().startsWith("Creating")){
@@ -436,17 +438,19 @@ public class ArcCore extends ListenerAdapter {
                 }
             }
             if (event.getGuild().getName().equals("Dungeons and Dickholes")) {
-                if (event.getMessage().getContentRaw().contains("= (1)")) {
-                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
-                }
-                if (event.getMessage().getContentRaw().contains("= (20)")) {
-                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527532487329710111/completely-erect-jenkins-im-back-from-my-long-sabbatical-and-3956744-picsay.png").queue();
-                }
-                if (event.getMessage().getContentRaw().contains("= (2)")) {
-                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527212607073943553/2.jpg").queue();
-                }
-                if (event.getMessage().getContentRaw().contains("= (19)")) {
-                    event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527567698415190027/i-have-the-weirdest-boner.jpg").queue();
+                if((int)(Math.random()*10)+1==10) {
+                    if (event.getMessage().getContentRaw().contains("= (1)")) {
+                        event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/375004521212149772/490557385320955915/32875754_2091003187856028_8205528177125097472_n.png").queue();
+                    }
+                    if (event.getMessage().getContentRaw().contains("= (20)")) {
+                        event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527532487329710111/completely-erect-jenkins-im-back-from-my-long-sabbatical-and-3956744-picsay.png").queue();
+                    }
+                    if (event.getMessage().getContentRaw().contains("= (2)")) {
+                        event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527212607073943553/2.jpg").queue();
+                    }
+                    if (event.getMessage().getContentRaw().contains("= (19)")) {
+                        event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527567698415190027/i-have-the-weirdest-boner.jpg").queue();
+                    }
                 }
                 if (event.getMessage().getContentRaw().equalsIgnoreCase("lol")) {
                     event.getChannel().sendMessage("http://img0.liveinternet.ru/images/attach/c/10/111/18/111018368_RRyoSRR__SRRRRRSRRSSRRSRyo_RRyoSRRS.gif").queue();
