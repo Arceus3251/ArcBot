@@ -452,9 +452,6 @@ public class ArcCore extends ListenerAdapter {
                         event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/501451663148843035/527567698415190027/i-have-the-weirdest-boner.jpg").queue();
                     }
                 }
-                if (event.getMessage().getContentRaw().equalsIgnoreCase("lol")) {
-                    event.getChannel().sendMessage("http://img0.liveinternet.ru/images/attach/c/10/111/18/111018368_RRyoSRR__SRRRRRSRRSSRRSRyo_RRyoSRRS.gif").queue();
-                }
             }
             //Sunflower Academy Commands
             if(event.getGuild().getId().equals("581287208594571265")){
